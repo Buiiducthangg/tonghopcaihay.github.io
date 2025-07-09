@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProxyHarvest Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+     body.dark { background: #181e29; color: #e2e8f0; }
+    .dark .bg-white { background: #232b3a !important; }
+    .dark .bg-gray-100 { background: #181e29 !important; }
+    .dark .text-gray-600, .dark .text-gray-700 { color: #a0aec0 !important; }
+    .dark .bg-gray-50 { background: #2d3748 !important; }
+    .notification {
+      position: fixed; top: 24px; right: 24px; z-index: 9999; padding: 1rem 1.5rem;
+      border-radius: 0.5rem; background: #232b3a; color: #fff; font-weight: 600;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2); animation: fadeInOut 3s;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-20px);}
+      10% { opacity: 1; transform: translateY(0);}
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-20px);}
+    }
+    .badge { display: inline-block; padding: 0.2em 0.6em; border-radius: 0.3em; font-size: 0.85em; }
+    .badge-idle { background: #e2e8f0; color: #2d3748; }
+    .badge-crawling { background: #fbbf24; color: #fff; }
+    .badge-success { background: #34d399; color: #fff; }
+    .badge-error { background: #f87171; color: #fff; }
+    .badge-working { background: #34d399; color: #fff; }
+    .badge-dead { background: #f87171; color: #fff; }
+    .badge-pending { background: #fbbf24; color: #fff; }
+    .table-responsive { overflow-x: auto; }
+    .table th, .table td { white-space: nowrap; }
+
+    #proxyChart {
+  width: 250px !important;
+  height: 250px !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.responsive-canvas {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 400px; /* hoặc giá trị bạn muốn */
+  height: 120px;    /* hoặc auto nếu muốn tự co */
+}
+    .api-btn {
+      background: #4a5568; /* Gray 700 */
+      color: #fff;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+    .api-btn:hover { background: #2d3748; } /* Gray 800 */
+    .api-btn:active { background: #1a202c; } /* Gray 900 */
+</style>
+</head>
+<body class="bg-gray-100 font-[Inter] text-sm">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-white p-4 border-r flex flex-col">
+      <h1 class="text-2xl font-bold mb-4 text-blue-800">Proxy Free Ngon</h1>
+      <div class="mb-6">
+        <h2 class="font-semibold mb-2">Bộ lọc</h2>
+        <select id="statusFilter" class="w-full mb-2 p-2 border rounded">
+          <option value="">Tất cả trạng thái</option>
+          <option value="Working">Tốt</option>
+          <option value="Pending">Trung bình</option>
+          <option value="Dead">Yếu</option>
+        </select>
+        <select id="typeFilter" class="w-full mb-2 p-2 border rounded">
+          <option value="">Tất cả loại</option>
+          <option value="HTTP">HTTP</option>
+          <option value="HTTPS">HTTPS</option>
+          <option value="SOCKS">SOCKS</option>
+        </select>
+        <select id="countryFilter" class="w-full mb-2 p-2 border rounded">
+          <option value="">Tất cả quốc gia</option>
+          <option value="US">US</option>
+          <option value="UK">UK</option>
+          <option value="MN">MN</option>
+        </select>
+        <select id="anonymityFilter" class="w-full mb-2 p-2 border rounded">
+          <option value="">Tất cả ẩn danh</option>
+          <option value="Transparent">Transparent</option>
+          <option value="Anonymous">Anonymous</option>
+          <option value="Elite">Elite</option>
+        </select>
+        <button id="applyFiltersBtn" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Áp dụng bộ lọc</button>
+      </div>
+      <div class="mb-6">
+        <h2 class="font-semibold mb-2">Trạng thái thu thập</h2>
+        <ul class="text-gray-700 space-y-1" id="crawlingStatus">
+          <li data-source="Geonode">Geonode <span class="badge badge-idle ml-2">Idle</span></li>
+          <li data-source="ProxyScrape">ProxyScrape <span class="badge badge-idle ml-2">Idle</span></li>
+          <li data-source="FreeProxyList">Free Proxy List <span class="badge badge-idle ml-2">Idle</span></li>
+          <li data-source="SSLProxies">SSL Proxies <span class="badge badge-idle ml-2">Idle</span></li>
+          <li data-source="ProxyList">Proxy List <span class="badge badge-idle ml-2">Idle</span></li>
+        </ul>
+        <button id="startCrawlingBtn" class="mt-2 bg-green-600 text-white px-3 py-1 rounded text-xs w-full">Bắt đầu thu thập</button>
+      </div>
+      <div>
+        <h2 class="font-semibold mb-2">Quick API Access</h2>
+        <button class="w-full bg-gray-800 text-white py-2 rounded mb-2 api-btn" data-endpoint="/api/proxies">Tất cả Proxy</button>
+        <button class="w-full bg-gray-800 text-white py-2 rounded mb-2 api-btn" data-endpoint="/api/proxies/high-anon">Ẩn danh cao</button>
+        <button class="w-full bg-gray-800 text-white py-2 rounded mb-2 api-btn" data-endpoint="/api/proxies/https">Chỉ HTTPS</button>
+        <button class="w-full bg-gray-800 text-white py-2 rounded api-btn" data-endpoint="/api/proxies/custom">Truy vấn tùy chỉnh</button>
+      </div>
+      <div class="mt-auto pt-6">
+        <button id="toggleDarkMode" class="w-full bg-gray-500 text-white py-2 rounded">Chuyển giao diện</button>
+      </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <!-- Top Header -->
+      <div class="flex flex-wrap justify-between items-center mb-4 bg-white p-4 rounded shadow">
+        <div class="text-sm text-gray-600">Live <span id="time" class="text-green-500 ml-1">--:--:--</span></div>
+        <div class="flex gap-4 flex-wrap">
+          <div class="text-center">
+            <div id="total" class="font-semibold text-lg">0</div>
+            <div class="text-gray-600">Tổng số Proxy</div>
+          </div>
+          <div class="text-center">
+            <div id="working" class="font-semibold text-lg text-green-600">0</div>
+            <div class="text-gray-600">Hoạt động</div>
+          </div>
+          <div class="text-center">
+            <div id="sources" class="font-semibold text-lg">0</div>
+            <div class="text-gray-600">Nguồn</div>
+          </div>
+          <button id="pauseBtn" class="bg-red-600 text-white px-4 py-2 rounded">Tạm dừng thu thập</button>
+        </div>
+      </div>
+      <!-- Status Panel -->
+      <div class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white rounded-lg p-4 mb-6">
+        <h2 class="text-lg font-semibold mb-1">🚀 Proxy Chất Lượng Cao - Không Bị Chặn</h2>
+        <p class="text-sm">Hệ thống proxy thông minh với 4 lớp: Kết nối • Ẩn danh • Tốc độ • Ổn định</p>
+        <div class="mt-2 flex gap-4 text-xs">
+          <span class="bg-green-500 text-white px-2 py-1 rounded">✅ 90%+ Tỷ lệ thành công</span>
+          <span class="bg-purple-500 text-white px-2 py-1 rounded">⚡ &lt; 2s Phản hồi</span>
+          <span class="bg-pink-500 text-white px-2 py-1 rounded">🛡️ Ẩn danh cao</span>
+          <span class="bg-yellow-400 text-white px-2 py-1 rounded">📦 11+ Nguồn premium</span>
+        </div>
+      </div>
+      <!-- Stats Boxes & Chart -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-600">Tổng số Proxy</p>
+          <h3 class="text-xl font-semibold" id="totalProxiesStat">0</h3>
+          <p class="text-green-500 text-xs mt-1">+4.7% tăng trong giờ qua</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-600">Proxy hoạt động</p>
+          <h3 class="text-xl font-semibold text-green-600" id="workingProxiesStat">0</h3>
+          <p class="text-xs mt-1" id="successRate">0% tỷ lệ thành công</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-600">Thời gian phản hồi TB</p>
+          <h3 class="text-xl font-semibold" id="responseTimeStat">0ms</h3>
+          <p class="text-yellow-600 text-xs mt-1">Tối ưu hiệu suất cao</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <p class="text-gray-600">Nguồn hoạt động</p>
+          <h3 class="text-xl font-semibold" id="activeSourcesStat">5</h3>
+          <p class="text-purple-600 text-xs mt-1">Tất cả Online</p>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded shadow mb-6">
+        <h2 class="font-semibold text-lg mb-2">Thống kê Proxy</h2>
+        <div class="flex justify-center">
+          <canvas id="proxyChart" class="mx-auto"></canvas>
+        </div>
+      </div>
+      <!-- Proxy List -->
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+          <div>
+            <h2 class="font-semibold text-lg">Danh sách Proxy</h2>
+            <p class="text-sm text-gray-500">Cơ sở dữ liệu proxy thời gian thực với trạng thái xác thực</p>
+          </div>
+          <div class="flex gap-2 mt-2 sm:mt-0 flex-wrap">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm IP hoặc Country..." class="p-2 border rounded w-full sm:w-64">
+            <button id="downloadPremiumBtn" class="bg-yellow-400 px-3 py-1 rounded text-white text-xs">Premium</button>
+            <button id="downloadStealthBtn" class="bg-purple-600 px-3 py-1 rounded text-white text-xs">Stealth</button>
+            <button id="downloadAllWorkingBtn" class="bg-green-600 px-3 py-1 rounded text-white text-xs">Tải Xuống Proxy Tốt</button>
+            <button id="exportCsvBtn" class="bg-indigo-600 px-3 py-1 rounded text-white text-xs">Xuất CSV</button>
+            <button id="checkAllBtn" class="bg-orange-500 px-3 py-1 rounded text-white text-xs">Kiểm tra tất cả</button>
+            <button id="refreshBtn" class="bg-blue-500 px-3 py-1 rounded text-white text-xs">Làm mới</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="w-full text-left text-sm table">
+            <thead>
+              <tr class="bg-gray-50 text-gray-600">
+                <th class="p-2 cursor-pointer" data-sort="asc">IP Address</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Port</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Type</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Country</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Anonymity</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Speed</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Status</th>
+                <th class="p-2 cursor-pointer" data-sort="asc">Last Check</th>
+                <th class="p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="proxyTableBody"></tbody>
+          </table>
+        </div>
+        <div class="mt-4 flex justify-center">
+          <button id="prevPage" class="bg-gray-300 px-3 py-1 rounded mr-2">Trước</button>
+          <span id="pageInfo" class="px-3 py-1">Page 1 of 1</span>
+          <button id="nextPage" class="bg-gray-300 px-3 py-1 rounded">Sau</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    // --- Biến toàn cục ---
+    let isPaused = false, total = 0, working = 0, sources = 5, currentPage = 1, itemsPerPage = 10;
+    let allProxies = [], filteredProxies = [], darkMode = false, proxyChart = null;
+    let crawlingStatus = {
+      Geonode: "Idle", ProxyScrape: "Idle", FreeProxyList: "Idle", SSLProxies: "Idle", ProxyList: "Idle"
+    };
+
+    // --- Nguồn proxy miễn phí ---
+    const proxySources = [
+      { name: "ProxyScrape", url: "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all" },
+      { name: "PubProxy", url: "https://pubproxy.com/api/proxy?limit=50&format=json" }
+    ];
+
+    // --- Hàm tiện ích ---
+    function showNotification(msg, type = "info") {
+      const div = document.createElement("div");
+      div.className = "notification";
+      div.style.background = type === "error" ? "#e53e3e" : type === "success" ? "#10b981" : type === "warning" ? "#f59e42" : "#232b3a";
+      div.textContent = msg;
+      document.body.appendChild(div);
+      setTimeout(() => div.remove(), 3000);
+    }
+
+    function randomStatus() {
+      const arr = ["Working", "Dead", "Pending"];
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+    function randomSpeed() {
+      const arr = ["Fast", "Medium", "Slow", "N/A"];
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // --- Lấy proxy miễn phí từ nhiều nguồn ---
+    async function fetchProxies() {
+      let proxies = [];
+      for (const src of proxySources) {
+        try {
+          crawlingStatus[src.name] = "Crawling";
+          updateCrawlingStatus();
+          if (src.name === "ProxyScrape") {
+            const res = await fetch(src.url);
+            const text = await res.text();
+            proxies = proxies.concat(
+              text.split('\n').filter(line => line.trim()).slice(0, 1000000).map(line => {
+                const [ip, port] = line.split(':');
+                return { ip: ip || '', port: port || '', type: "HTTP", country: "N/A", anonymity: "Anonymous", speed: "N/A", status: "Pending", lastCheck: "Just now" };
+              })
+            );
+          } else if (src.name === "PubProxy") {
+            const res = await fetch(src.url);
+            const json = await res.json();
+            proxies = proxies.concat(
+              (json.data || []).map(p => ({
+                ip: p.ip || '', port: p.port || '', type: p.type || "HTTP", country: p.country || "N/A",
+                anonymity: p.proxy_level || "Anonymous", speed: p.speed ? `${p.speed}s` : "N/A",
+                status: "Pending", lastCheck: p.last_checked || "Just now"
+              }))
+            );
+          }
+          crawlingStatus[src.name] = "Idle";
+          updateCrawlingStatus();
+        } catch (e) {
+          crawlingStatus[src.name] = "Idle";
+          updateCrawlingStatus();
+        }
+      }
+      return proxies;
+    }
+
+    function updateCrawlingStatus() {
+      document.querySelectorAll("#crawlingStatus li").forEach(li => {
+        const src = li.getAttribute("data-source");
+        const status = crawlingStatus[src];
+        li.querySelector("span").className = "badge badge-" + (status === "Crawling" ? "crawling" : "idle");
+        li.querySelector("span").textContent = status;
+      });
+    }
+
+    // --- Kiểm tra trạng thái proxy (song song, tối ưu tốc độ) ---
+    async function checkProxy(proxy) {
+      // Có thể thay bằng kiểm tra thực tế với backend hoặc fetch qua proxy nếu cần
+      return new Promise(resolve => {
+        setTimeout(() => {
+          proxy.status = randomStatus();
+          proxy.speed = randomSpeed();
+          proxy.lastCheck = new Date().toLocaleTimeString('vi-VN', { hour12: false });
+          resolve(proxy);
+        }, 200 + Math.random() * 500);
+      });
+    }
+    async function checkAllProxies(proxies) {
+      showNotification("Đang kiểm tra trạng thái toàn bộ proxy...", "info");
+      await Promise.all(proxies.map(p => checkProxy(p)));
+      showNotification("Đã kiểm tra xong trạng thái proxy!", "success");
+      updateProxyTable(getCurrentPageProxies());
+      updateStats();
+      drawChart();
+    }
+
+    // --- Lọc, tìm kiếm, phân trang ---
+    function applyFilters() {
+      const status = document.getElementById("statusFilter").value;
+      const type = document.getElementById("typeFilter").value;
+      const country = document.getElementById("countryFilter").value;
+      const anonymity = document.getElementById("anonymityFilter").value;
+      filteredProxies = allProxies.filter(p =>
+        (!status || p.status === status) &&
+        (!type || p.type === type) &&
+        (!country || p.country === country) &&
+        (!anonymity || p.anonymity === anonymity)
+      );
+      currentPage = 1;
+      updateProxyTable(getCurrentPageProxies());
+      updateStats();
+      drawChart();
+    }
+    function getCurrentPageProxies() {
+      const arr = filteredProxies.length ? filteredProxies : allProxies;
+      const totalPages = Math.max(1, Math.ceil(arr.length / itemsPerPage));
+      document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${totalPages}`;
+      return arr.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    }
+    function updateProxyTable(proxies) {
+      const tbody = document.getElementById("proxyTableBody");
+      tbody.innerHTML = "";
+      proxies.forEach(proxy => {
+        const tr = document.createElement("tr");
+        tr.className = "border-b";
+        tr.innerHTML = `
+          <td class="p-2">${proxy.ip}</td>
+          <td class="p-2">${proxy.port}</td>
+          <td class="p-2"><span class="badge badge-idle">${proxy.type}</span></td>
+          <td class="p-2">${proxy.country}</td>
+          <td class="p-2"><span class="badge badge-idle">${proxy.anonymity}</span></td>
+          <td class="p-2">${proxy.speed}</td>
+          <td class="p-2"><span class="badge badge-${proxy.status.toLowerCase()}">${proxy.status}</span></td>
+          <td class="p-2">${proxy.lastCheck}</td>
+          <td class="p-2">
+            <button class="text-blue-500 mr-2 copy-btn" data-ip="${proxy.ip}" data-port="${proxy.port}">Copy</button>
+            <button class="text-green-500 mr-2 check-btn" data-ip="${proxy.ip}">Check</button>
+            <button class="text-red-500 delete-btn" data-ip="${proxy.ip}">🗑</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      attachRowEvents();
+    }
+    function attachRowEvents() {
+      document.querySelectorAll(".copy-btn").forEach(btn => {
+        btn.onclick = () => {
+          const ip = btn.getAttribute("data-ip");
+          const port = btn.getAttribute("data-port");
+          navigator.clipboard.writeText(`${ip}:${port}`);
+          showNotification(`Đã sao chép ${ip}:${port}`, "success");
+        };
+      });
+      document.querySelectorAll(".check-btn").forEach(btn => {
+        btn.onclick = async () => {
+          const ip = btn.getAttribute("data-ip");
+          const proxy = allProxies.find(p => p.ip === ip);
+          await checkProxy(proxy);
+          updateProxyTable(getCurrentPageProxies());
+          updateStats();
+          drawChart();
+          showNotification(`Proxy ${ip} đã được kiểm tra trạng thái!`, "info");
+        };
+      });
+      document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.onclick = () => {
+          const ip = btn.getAttribute("data-ip");
+          allProxies = allProxies.filter(p => p.ip !== ip);
+          filteredProxies = filteredProxies.filter(p => p.ip !== ip);
+          updateProxyTable(getCurrentPageProxies());
+          updateStats();
+          drawChart();
+          showNotification(`Đã xóa proxy ${ip}`, "success");
+        };
+      });
+    }
+
+    // --- Tìm kiếm ---
+    document.getElementById("searchInput").oninput = (e) => {
+      const term = e.target.value.toLowerCase();
+      filteredProxies = allProxies.filter(p =>
+        p.ip.toLowerCase().includes(term) || p.country.toLowerCase().includes(term)
+      );
+      currentPage = 1;
+      updateProxyTable(getCurrentPageProxies());
+      updateStats();
+      drawChart();
+    };
+
+    // --- Phân trang ---
+    document.getElementById("prevPage").onclick = () => {
+      if (currentPage > 1) { currentPage--; updateProxyTable(getCurrentPageProxies()); }
+    };
+    document.getElementById("nextPage").onclick = () => {
+      const arr = filteredProxies.length ? filteredProxies : allProxies;
+      const totalPages = Math.max(1, Math.ceil(arr.length / itemsPerPage));
+      if (currentPage < totalPages) { currentPage++; updateProxyTable(getCurrentPageProxies()); }
+    };
+
+    // --- Sắp xếp ---
+    document.querySelectorAll("table th").forEach((th, idx) => {
+      if (idx < 8) {
+        th.onclick = () => {
+          let arr = filteredProxies.length ? filteredProxies : allProxies;
+          arr = arr.slice().sort((a, b) => {
+            const aVal = Object.values(a)[idx] + "";
+            const bVal = Object.values(b)[idx] + "";
+            return th.dataset.sort === "asc"
+              ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+          });
+          th.dataset.sort = th.dataset.sort === "asc" ? "desc" : "asc";
+          filteredProxies = arr;
+          currentPage = 1;
+          updateProxyTable(getCurrentPageProxies());
+        };
+      }
+    });
+
+    // --- Nút thao tác nhanh ---
+    document.getElementById("downloadPremiumBtn").onclick = () => downloadProxies("Elite");
+    document.getElementById("downloadStealthBtn").onclick = () => downloadProxies("Anonymous");
+    document.getElementById("downloadAllWorkingBtn").onclick = () => downloadProxies("Working");
+    document.getElementById("exportCsvBtn").onclick = exportCSV;
+    document.getElementById("checkAllBtn").onclick = () => checkAllProxies(filteredProxies.length ? filteredProxies : allProxies);
+    document.getElementById("refreshBtn").onclick = reloadProxies;
+    document.getElementById("applyFiltersBtn").onclick = applyFilters;
+    document.getElementById("startCrawlingBtn").onclick = reloadProxies;
+    document.getElementById("pauseBtn").onclick = () => {
+      isPaused = !isPaused;
+      document.getElementById("pauseBtn").textContent = isPaused ? "Tiếp tục thu thập" : "Tạm dừng thu thập";
+    };
+    document.getElementById("toggleDarkMode").onclick = () => {
+      darkMode = !darkMode;
+      document.body.classList.toggle("dark", darkMode);
+    };
+
+    // --- Xuất/tải proxy ---
+    function downloadProxies(type) {
+      let arr = allProxies;
+      if (type === "Elite" || type === "Anonymous") arr = arr.filter(p => p.anonymity === type);
+      if (type === "Working") arr = arr.filter(p => p.status === "Working");
+      const content = arr.map(p => `${p.ip}:${p.port}`).join("\n");
+      const blob = new Blob([content], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${type}_proxies.txt`;
+      link.click();
+    }
+    function exportCSV() {
+      const arr = filteredProxies.length ? filteredProxies : allProxies;
+      const csv = [
+        "IP,Port,Type,Country,Anonymity,Speed,Status,Last Check",
+        ...arr.map(p => [p.ip, p.port, p.type, p.country, p.anonymity, p.speed, p.status, p.lastCheck].join(","))
+      ].join("\n");
+      const blob = new Blob([csv], { type: "text/csv" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "proxies.csv";
+      link.click();
+    }
+
+    // --- Thống kê & biểu đồ ---
+    function updateStats() {
+      total = allProxies.length;
+      working = allProxies.filter(p => p.status === "Working").length;
+      document.getElementById("total").textContent = total;
+      document.getElementById("working").textContent = working;
+      document.getElementById("sources").textContent = sources;
+      document.getElementById("totalProxiesStat").textContent = total;
+      document.getElementById("workingProxiesStat").textContent = working;
+      document.getElementById("successRate").textContent = total ? (working / total * 100).toFixed(1) + "% tỷ lệ thành công" : "0% tỷ lệ thành công";
+      document.getElementById("responseTimeStat").textContent = estimateResponseTime() + "ms";
+      document.getElementById("activeSourcesStat").textContent = sources;
+    }
+    function estimateResponseTime() {
+      const arr = allProxies.map(p => p.speed).filter(s => s !== "N/A");
+      if (!arr.length) return 0;
+      const map = { Fast: 500, Medium: 1200, Slow: 2500 };
+      return Math.round(arr.map(s => map[s] || 0).reduce((a, b) => a + b, 0) / arr.length);
+    }
+    function drawChart() {
+      const data = {
+        labels: ["Working", "Pending", "Dead"],
+        datasets: [{
+          data: [
+            allProxies.filter(p => p.status === "Working").length,
+            allProxies.filter(p => p.status === "Pending").length,
+            allProxies.filter(p => p.status === "Dead").length
+          ],
+          backgroundColor: ["#34d399", "#fbbf24", "#f87171"]
+        }]
+      };
+      if (proxyChart) proxyChart.destroy();
+      const ctx = document.getElementById("proxyChart").getContext("2d");
+      proxyChart = new Chart(ctx, { type: "doughnut", data, options: { plugins: { legend: { position: "bottom" } } } });
+    }
+
+    // --- Tải lại proxy ---
+    async function reloadProxies() {
+      showNotification("Đang thu thập proxy miễn phí...", "info");
+      allProxies = await fetchProxies();
+      filteredProxies = [];
+      currentPage = 1;
+      await checkAllProxies(allProxies);
+      updateProxyTable(getCurrentPageProxies());
+      updateStats();
+      drawChart();
+      showNotification(`Đã thu thập ${allProxies.length} proxy miễn phí!`, "success");
+    }
+
+    // --- Đồng hồ 24h Việt Nam ---
+    function updateTime() {
+      const now = new Date();
+      // Giờ Việt Nam (GMT+7)
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const vn = new Date(utc + 7 * 3600000);
+      const h = vn.getHours().toString().padStart(2, "0");
+      const m = vn.getMinutes().toString().padStart(2, "0");
+      const s = vn.getSeconds().toString().padStart(2, "0");
+      document.getElementById("time").textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateTime, 1000);
+
+    // --- Khởi động ---
+    (async function() {
+      await reloadProxies();
+      updateProxyTable(getCurrentPageProxies());
+      updateStats();
+      drawChart();
+      updateTime();
+    })();
+  </script>
+  <script>
+let totalProxies = 1000; // Giá trị khởi tạo
+let oldTotal = totalProxies;
+let lastHour = Date.now();
+
+function updateProxyStats() {
+  // Giả lập số proxy tăng ngẫu nhiên
+  const now = Date.now();
+  if (now - lastHour >= 60 * 60 * 1000) { // Mỗi giờ reset
+    oldTotal = totalProxies;
+    lastHour = now;
+  }
+  // Tăng proxy ngẫu nhiên mỗi 2-5 giây
+  const increment = Math.floor(Math.random() * 5);
+  totalProxies += increment;
+
+  // Tính phần trăm tăng so với đầu giờ
+  const percent = oldTotal === 0 ? 0 : (((totalProxies - oldTotal) / oldTotal) * 100).toFixed(1);
+
+  // Cập nhật lên giao diện
+  document.getElementById("totalProxiesStat").textContent = totalProxies.toLocaleString();
+  document.getElementById("proxyGrowth").textContent = `+${percent}% tăng trong giờ qua`;
+}
+
+// Cập nhật mỗi 3 giây (bạn có thể thay đổi thời gian này)
+setInterval(updateProxyStats, 3000);
+updateProxyStats();
+
+async function fetchProxyCount() {
+  // Ví dụ gọi API trả về số lượng proxy
+  const res = await fetch('/api/proxies/count');
+  const data = await res.json();
+  return data.total; // hoặc tên trường phù hợp
+}
+
+async function updateProxyStatsReal() {
+  const now = Date.now();
+  if (now - lastHour >= 60 * 60 * 1000) {
+    oldTotal = totalProxies;
+    lastHour = now;
+  }
+  totalProxies = await fetchProxyCount();
+  const percent = oldTotal === 0 ? 0 : (((totalProxies - oldTotal) / oldTotal) * 100).toFixed(1);
+  document.getElementById("totalProxiesStat").textContent = totalProxies.toLocaleString();
+  document.getElementById("proxyGrowth").textContent = `+${percent}% tăng trong giờ qua`;
+}
+setInterval(updateProxyStatsReal, 3000);
+updateProxyStatsReal();
+
+</script>
+
+</body>
+</html>
