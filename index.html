@@ -1,47 +1,537 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <title>Đang chuyển hướng...</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTokSalesAI Max Pro VIP</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      background: #f5f6fa;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .loader {
-      border: 8px solid #e0e0e0;
-      border-top: 8px solid #3498db;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-      margin-bottom: 20px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
-    }
-    .fade-out {
-      animation: fadeOut 1s forwards;
-    }
-    @keyframes fadeOut {
-      100% { opacity: 0; }
-    }
+    body { background: linear-gradient(120deg,#18181b 70%,#06b6d4 100%); color: #f3f4f6; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; min-height: 100vh; }
+    .sidebar { background: #23232a; color: #fff; width: 260px; min-height: 100vh; padding: 32px 0 0 0; display: flex; flex-direction: column; align-items: center; border-right: 1px solid #2d2d34; position: fixed; left: 0; top: 0; bottom: 0; box-shadow: 0 0 24px #06b6d4a0; }
+    .logo { font-size: 2rem; font-weight: bold; margin-bottom: 32px; background: linear-gradient(90deg, #ec4899, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
+    nav { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
+    nav button { width: 200px; padding: 12px 0; background: linear-gradient(90deg, #ec4899 20%, #06b6d4 80%); color: #fff; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-bottom: 4px; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px #06b6d4a0; }
+    nav button.active, nav button:hover { background: #06b6d4; color: #fff; box-shadow: 0 4px 16px #ec4899a0; }
+    .user-box { margin-top: 32px; background: #2d2d34; color: #fff; padding: 20px; border-radius: 12px; width: 200px; text-align: center; font-size: 1.1rem; margin-bottom: 24px; box-shadow: 0 2px 8px #0002; }
+    .user-box span { font-size: 1rem; color: #a1a1aa; }
+    .main-content { margin-left: 260px; padding: 40px; width: calc(100vw - 260px); min-height: 100vh; background: rgba(24,24,27,0.95); }
+    .page-section { background: #23232a; border-radius: 16px; box-shadow: 0 4px 24px #06b6d4a0; padding: 40px; margin-bottom: 32px; animation: fadeIn 0.3s; }
+    .section-title { font-size: 2rem; font-weight: bold; margin-bottom: 20px; color: #fff; letter-spacing: 1px; }
+    .section-desc { color: #a1a1aa; font-size: 1.2rem; margin-bottom: 32px; }
+    .flex { display: flex; gap: 32px; }
+    .card { background: #23232a; border-radius: 14px; box-shadow: 0 2px 12px #06b6d4a0; padding: 28px; margin-bottom: 20px; }
+    .btn { background: linear-gradient(90deg,#ec4899,#06b6d4); color: #fff; border: none; border-radius: 12px; padding: 12px 32px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px #06b6d4a0; }
+    .btn:hover { background: #06b6d4; color: #fff; box-shadow: 0 4px 16px #ec4899a0; }
+    .input { padding: 10px; border-radius: 10px; border: 1px solid #333; background: #18181b; color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
+    .table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    .table th, .table td { padding: 10px 16px; border-bottom: 1px solid #333; text-align: left; }
+    .table th { background: #23232a; color: #fff; font-size: 1.1rem; }
+    .table td { background: #18181b; color: #f3f4f6; font-size: 1.05rem; }
+    .chart-box { background: #23232a; border-radius: 16px; padding: 32px; margin-bottom: 32px; box-shadow: 0 2px 12px #06b6d4a0; }
+    .alert { background: #f87171; color: #fff; padding: 12px 24px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; }
+    .success { background: #22c55e; color: #fff; padding: 12px 24px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; }
+    .vip { background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4); color: #23232a; font-weight: bold; padding: 10px 24px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; box-shadow: 0 2px 8px #facc15a0; }
+    .avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(90deg,#ec4899,#06b6d4); display: inline-block; margin-right: 12px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(24px);} to { opacity: 1; transform: none;} }
+    .chatbot-box { background: #18181b; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px #06b6d4a0; }
+    .chatbot-msg { margin-bottom: 12px; }
+    .chatbot-user { color: #06b6d4; font-weight: bold; }
+    .chatbot-ai { color: #ec4899; font-weight: bold; }
+    .group-box { background: #18181b; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px #06b6d4a0; }
+    .group-member { display: flex; align-items: center; margin-bottom: 8px; }
+    .group-member .avatar { margin-right: 8px; }
+    .switch-lang { margin-top: 16px; }
   </style>
-  <script>
-    setTimeout(function() {
-      document.body.classList.add('fade-out');
-      setTimeout(function() {
-        window.location.href = 'trang_chu.html';
-      }, 1000);
-    }, 2000); // 2s loading rồi fade out
-  </script>
 </head>
 <body>
-  <div class="loader"></div>
-  <p>Đang chuyển hướng đến <a href="trang_chu.html">trang chính</a>...</p>
+  <div class="sidebar">
+    <div class="logo">TikTokSalesAI Max Pro VIP</div>
+    <nav>
+      <button class="active" onclick="showPage('dashboard')">Dashboard</button>
+      <button onclick="showPage('hashtag')">Xu Hướng Hashtag</button>
+      <button onclick="showPage('product')">Sản Phẩm</button>
+      <button onclick="showPage('ai')">Tạo Video AI</button>
+      <button onclick="showPage('strategy')">Chiến Lược Nội Dung</button>
+      <button onclick="showPage('analytics')">Phân Tích</button>
+      <button onclick="showPage('alert')">Thông Báo</button>
+      <button onclick="showPage('user')">Tài Khoản</button>
+      <button onclick="showPage('tools')">Công Cụ</button>
+      <button onclick="showPage('chatbot')">Chatbot AI</button>
+      <button onclick="showPage('group')">Quản Lý Nhóm</button>
+      <button onclick="showPage('sync')">Đồng Bộ TikTok Shop</button>
+    </nav>
+    <div class="user-box">
+      <div class="avatar"></div>
+      <div>VIP User<br><span>Gói Max Pro VIP</span></div>
+    </div>
+  </div>
+  <div class="main-content">
+    <!-- 1. Dashboard -->
+    <section id="dashboard" class="page-section active">
+      <div class="section-title">Dashboard Tổng Quan</div>
+      <div class="section-desc">Số liệu tổng quan, biểu đồ AI, cảnh báo thông minh, cá nhân hóa, automation.</div>
+      <div class="vip">Chào mừng bạn đến với TikTokSalesAI Max Pro VIP! 🚀</div>
+      <div class="flex">
+        <div class="card" style="flex:1;">
+          <div>Hashtag Thịnh Hành</div>
+          <div style="font-size:2.2rem;font-weight:bold;" id="hashtag-count">10</div>
+          <div style="color:#22c55e;">+12% tuần này</div>
+        </div>
+        <div class="card" style="flex:1;">
+          <div>Video AI Đã Được Tạo</div>
+          <div style="font-size:2.2rem;font-weight:bold;" id="video-count">0</div>
+          <div style="color:#22c55e;">+23% tuần này</div>
+        </div>
+        <div class="card" style="flex:1;">
+          <div>Sản Phẩm Theo Dõi</div>
+          <div style="font-size:2.2rem;font-weight:bold;" id="product-count">0</div>
+          <div style="color:#facc15;">→ Không đổi</div>
+        </div>
+        <div class="card" style="flex:1;">
+          <div>Tỷ Lệ Tương Tác</div>
+          <div style="font-size:2.2rem;font-weight:bold;" id="engagement-rate">10,7 %</div>
+          <div style="color:#22c55e;">+5.2% tuần này</div>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div style="font-weight:bold;margin-bottom:8px;">Biểu đồ AI dự đoán hiệu suất tuần này</div>
+        <!-- SVG Chart mẫu -->
+        <svg width="100%" height="120" viewBox="0 0 600 120">
+          <polyline fill="none" stroke="#ec4899" stroke-width="3"
+            points="0,100 100,90 200,60 300,40 400,80 500,60 600,30" />
+          <circle cx="100" cy="90" r="7" fill="#06b6d4"/>
+          <circle cx="200" cy="60" r="7" fill="#06b6d4"/>
+          <circle cx="300" cy="40" r="7" fill="#06b6d4"/>
+          <circle cx="400" cy="80" r="7" fill="#06b6d4"/>
+          <circle cx="500" cy="60" r="7" fill="#06b6d4"/>
+        </svg>
+        <div style="display:flex;gap:32px;margin-top:8px;">
+          <div><b>3,5 triệu</b><br><span style="color:#a1a1aa;">Lượt xem</span></div>
+          <div><b>177K</b><br><span style="color:#a1a1aa;">Thích</span></div>
+          <div><b>20,2 nghìn</b><br><span style="color:#a1a1aa;">Chia sẻ</span></div>
+          <div><b>18,8 nghìn</b><br><span style="color:#a1a1aa;">Bình luận</span></div>
+        </div>
+      </div>
+      <div class="success">Cảnh báo AI: Hashtag #fyp đang tăng mạnh! Đề xuất đăng video trend ngay.</div>
+      <div class="alert">Thông báo: Sản phẩm #abc sắp hết hàng! Tự động gửi email cho nhà cung cấp.</div>
+      <div class="vip">Tính năng automation: Lên lịch đăng bài, tự động trả lời bình luận, xuất báo cáo PDF/Excel chỉ với 1 click.</div>
+    </section>
+    <!-- 2. Hashtag Trends -->
+    <section id="hashtag" class="page-section">
+      <div class="section-title">Xu Hướng Hashtag AI</div>
+      <div class="section-desc">Hashtag thịnh hành, bộ lọc AI, phân tích chi tiết, dự đoán trend tương lai.</div>
+      <div class="filter-group">
+        <button class="active" onclick="filterHashtag('all')">Tất cả</button>
+        <button onclick="filterHashtag('tech')">Công nghệ</button>
+        <button onclick="filterHashtag('sale')">Mua sắm</button>
+        <button onclick="filterHashtag('biz')">Kinh doanh</button>
+        <button onclick="filterHashtag('loc')">Địa điểm</button>
+        <button onclick="filterHashtag('ai')">AI Đề xuất</button>
+      </div>
+      <input type="text" id="hashtag-search" class="input" placeholder="Tìm kiếm hashtags...">
+      <div id="hashtag-list">
+        <!-- Danh sách hashtag sẽ được render ở đây -->
+      </div>
+      <div class="card">
+        <div style="font-weight:bold;">Phân tích chi tiết hashtag</div>
+        <div id="hashtag-detail">
+          <div>Chọn hashtag để xem biểu đồ tăng trưởng, dự đoán AI, đề xuất nội dung, lịch sử biến động...</div>
+        </div>
+      </div>
+    </section>
+    <!-- 3. Products -->
+    <section id="product" class="page-section">
+      <div class="section-title">Quản Lý Sản Phẩm AI</div>
+      <div class="section-desc">Thêm/xóa/sửa sản phẩm, theo dõi hiệu suất, đề xuất hashtag AI, đồng bộ TikTok Shop.</div>
+      <form id="product-form" style="margin-bottom:16px;">
+        <input class="input" type="text" id="product-name" placeholder="Tên sản phẩm" required>
+        <input class="input" type="number" id="product-stock" placeholder="Tồn kho" required>
+        <input class="input" type="number" id="product-price" placeholder="Giá" required>
+        <button class="btn" type="submit">Thêm sản phẩm</button>
+      </form>
+      <table class="table" id="product-table">
+        <thead>
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th>Tồn kho</th>
+            <th>Giá</th>
+            <th>Hiệu suất</th>
+            <th>Hashtag đề xuất</th>
+            <th>Đồng bộ TikTok Shop</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Sản phẩm sẽ render ở đây -->
+        </tbody>
+      </table>
+      <button class="btn" onclick="syncShop()">Đồng bộ TikTok Shop</button>
+    </section>
+    <!-- 4. AI Video Generator -->
+    <section id="ai" class="page-section">
+      <div class="section-title">Tạo Video AI Siêu Cấp</div>
+      <div class="section-desc">Tạo video quảng cáo sản phẩm bằng AI, chọn template, nhạc nền, hiệu ứng, tự động đăng TikTok.</div>
+      <form id="ai-form" style="margin-bottom:16px;">
+        <select class="input" id="ai-product">
+          <option value="">Chọn sản phẩm</option>
+        </select>
+        <input class="input" type="text" id="ai-content" placeholder="Nội dung video" required>
+        <select class="input" id="ai-template">
+          <option value="">Chọn template video</option>
+          <option value="basic">Cơ bản</option>
+          <option value="trend">Xu hướng</option>
+          <option value="ai">AI Đề xuất</option>
+        </select>
+        <input class="input" type="text" id="ai-music" placeholder="Nhạc nền AI" required>
+        <button class="btn" type="submit">Tạo video AI</button>
+      </form>
+      <div id="ai-history">
+        <div style="color:#a1a1aa;">Lịch sử video đã tạo sẽ hiển thị ở đây.</div>
+      </div>
+      <button class="btn" onclick="autoPostTikTok()">Tự động đăng TikTok</button>
+    </section>
+    <!-- 5. Content Strategy -->
+    <section id="strategy" class="page-section">
+      <div class="section-title">Chiến Lược Nội Dung AI</div>
+      <div class="section-desc">Đề xuất lịch đăng bài tối ưu, gợi ý nội dung AI, phân tích hiệu quả, automation.</div>
+      <form id="strategy-form" style="margin-bottom:16px;">
+        <input class="input" type="text" id="strategy-title" placeholder="Tiêu đề nội dung" required>
+        <input class="input" type="date" id="strategy-date" required>
+        <select class="input" id="strategy-type">
+          <option value="video">Video</option>
+          <option value="livestream">Livestream</option>
+          <option value="post">Bài viết</option>
+        </select>
+        <button class="btn" type="submit">Thêm vào kế hoạch</button>
+      </form>
+      <table class="table" id="strategy-table">
+        <thead>
+          <tr>
+            <th>Tiêu đề</th>
+            <th>Ngày đăng</th>
+            <th>Loại nội dung</th>
+            <th>Hiệu quả</th>
+            <th>Đề xuất AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Kế hoạch sẽ render ở đây -->
+        </tbody>
+      </table>
+      <button class="btn" onclick="autoSchedule()">Tự động lên lịch đăng bài</button>
+    </section>
+    <!-- 6. Analytics -->
+    <section id="analytics" class="page-section">
+      <div class="section-title">Phân Tích AI Chuyên Sâu</div>
+      <div class="section-desc">Biểu đồ AI, so sánh sản phẩm, hashtag, video, phân tích khách hàng, xuất báo cáo.</div>
+      <div class="chart-box">
+        <div style="font-weight:bold;margin-bottom:8px;">Biểu đồ AI hiệu suất</div>
+        <svg width="100%" height="120" viewBox="0 0 600 120">
+          <polyline fill="none" stroke="#06b6d4" stroke-width="3"
+            points="0,100 100,80 200,60 300,90 400,70 500,40 600,60" />
+        </svg>
+        <div style="display:flex;gap:32px;margin-top:8px;">
+          <div><b>Độ tuổi</b><br><span style="color:#a1a1aa;">18-24</span></div>
+          <div><b>Giới tính</b><br><span style="color:#a1a1aa;">Nam: 60% - Nữ: 40%</span></div>
+          <div><b>Khu vực</b><br><span style="color:#a1a1aa;">Hà Nội, TP.HCM</span></div>
+        </div>
+      </div>
+      <button class="btn">Xuất báo cáo PDF</button>
+      <button class="btn">Xuất báo cáo Excel</button>
+      <button class="btn" onclick="compareAnalytics()">So sánh hiệu quả AI</button>
+    </section>
+    <!-- 7. Notification & Alert -->
+    <section id="alert" class="page-section">
+      <div class="section-title">Thông Báo & Cảnh Báo AI</div>
+      <div class="section-desc">Thông báo xu hướng mới, sản phẩm bán chạy, cảnh báo AI, automation.</div>
+      <div class="success">Cảnh báo AI: Sản phẩm #abc sắp hết hàng! Đã gửi thông báo cho nhóm.</div>
+      <div class="alert">Thông báo AI: Video #xyz hiệu quả thấp! Đề xuất chỉnh nội dung.</div>
+      <div class="success">Nhắc lịch AI: Livestream lúc 20:00 hôm nay! Đã gửi SMS cho khách hàng.</div>
+      <button class="btn" onclick="autoAlert()">Tự động cảnh báo AI</button>
+    </section>
+    <!-- 8. User & Account Management -->
+    <section id="user" class="page-section">
+      <div class="section-title">Quản Lý Tài Khoản VIP</div>
+      <div class="section-desc">Đăng nhập/đăng ký, phân quyền, quản lý gói dịch vụ, bảo mật AI, lịch sử hoạt động.</div>
+      <form id="login-form" style="margin-bottom:16px;">
+        <input class="input" type="text" placeholder="Tên đăng nhập" required>
+        <input class="input" type="password" placeholder="Mật khẩu" required>
+        <button class="btn" type="submit">Đăng nhập</button>
+      </form>
+      <div style="color:#a1a1aa;">Lịch sử hoạt động, đổi mật khẩu, nâng cấp gói dịch vụ, xác thực AI, bảo mật 2 lớp.</div>
+      <button class="btn">Nâng cấp gói Max Pro VIP</button>
+    </section>
+    <!-- 9. Other Tools -->
+    <section id="tools" class="page-section">
+      <div class="section-title">Công Cụ AI Bổ Sung</div>
+      <div class="section-desc">Tìm kiếm video, lọc bình luận, kết nối API TikTok Shop, đa ngôn ngữ, automation.</div>
+      <form id="tool-form" style="margin-bottom:16px;">
+        <input class="input" type="text" placeholder="Tìm kiếm video theo hashtag/sản phẩm">
+        <button class="btn" type="submit">Tìm kiếm AI</button>
+      </form>
+      <div style="color:#a1a1aa;">Lọc và phân tích bình luận, đánh giá sản phẩm, đồng bộ dữ liệu TikTok Shop, xuất dữ liệu AI...</div>
+      <div class="switch-lang">
+        <select class="input" onchange="switchLang(this.value)">
+          <option value="vi">Tiếng Việt</option>
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="ko">한국어</option>
+        </select>
+      </div>
+    </section>
+    <!-- 10. Chatbot AI -->
+    <section id="chatbot" class="page-section">
+      <div class="section-title">Chatbot AI Tương Lai</div>
+      <div class="section-desc">Trợ lý AI hỗ trợ marketing, bán hàng, phân tích, trả lời tự động, cá nhân hóa.</div>
+      <div class="chatbot-box" id="chatbot-box">
+        <div class="chatbot-msg chatbot-ai">🤖 AI: Xin chào! Tôi là trợ lý AI TikTokSalesAI Max Pro VIP. Bạn cần hỗ trợ gì?</div>
+      </div>
+      <form id="chatbot-form" style="display:flex;gap:8px;">
+        <input class="input" type="text" id="chatbot-input" placeholder="Nhập câu hỏi cho AI..." required style="flex:1;">
+        <button class="btn" type="submit">Gửi</button>
+      </form>
+    </section>
+    <!-- 11. Quản lý nhóm -->
+    <section id="group" class="page-section">
+      <div class="section-title">Quản Lý Nhóm & Phân Quyền</div>
+      <div class="section-desc">Thêm/xóa thành viên, phân quyền, chat nhóm, lịch sử hoạt động.</div>
+      <div class="group-box" id="group-box">
+        <div class="group-member"><div class="avatar"></div> <b>Admin</b> - Quyền tối đa</div>
+        <div class="group-member"><div class="avatar"></div> <b>Marketing</b> - Đăng bài, phân tích</div>
+        <div class="group-member"><div class="avatar"></div> <b>Bán hàng</b> - Quản lý sản phẩm</div>
+      </div>
+      <form id="group-form" style="display:flex;gap:8px;">
+        <input class="input" type="text" id="group-input" placeholder="Thêm thành viên..." required style="flex:1;">
+        <button class="btn" type="submit">Thêm</button>
+      </form>
+    </section>
+    <!-- 12. Đồng bộ TikTok Shop -->
+    <section id="sync" class="page-section">
+      <div class="section-title">Đồng Bộ TikTok Shop AI</div>
+      <div class="section-desc">Kết nối API TikTok Shop, đồng bộ sản phẩm, đơn hàng, tự động cập nhật dữ liệu.</div>
+      <button class="btn" onclick="syncShop()">Đồng bộ ngay</button>
+      <div style="color:#a1a1aa;margin-top:16px;">Lịch sử đồng bộ, trạng thái kết nối, tự động cập nhật mỗi giờ.</div>
+    </section>
+  </div>
+  <script>
+    function showPage(page) {
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelector('nav button[onclick="showPage(\''+page+'\')"]').classList.add('active');
+      document.getElementById(page).classList.add('active');
+    }
+
+    // Hashtag Trends demo data
+    const hashtags = [
+      {rank: 1, tag: "#fyp", posts: "2,8 triệu", growth: 127, updated: "2/8/2025", topic: "all"},
+      {rank: 2, tag: "#côngnghệ", posts: "1,2 triệu", growth: 89, updated: "2/8/2025", topic: "tech"},
+      {rank: 3, tag: "#muasam", posts: "1,5 triệu", growth: 67, updated: "2/8/2025", topic: "sale"},
+      {rank: 4, tag: "#kinhdoanh", posts: "1,1 triệu", growth: 54, updated: "2/8/2025", topic: "biz"},
+      {rank: 5, tag: "#hanoi", posts: "0,9 triệu", growth: 43, updated: "2/8/2025", topic: "loc"},
+      {rank: 6, tag: "#AItrend", posts: "2,2 triệu", growth: 200, updated: "2/8/2025", topic: "ai"},
+    ];
+    let currentTopic = "all";
+    function renderHashtagList() {
+      const keyword = document.getElementById('hashtag-search').value.toLowerCase();
+      const list = document.getElementById('hashtag-list');
+      list.innerHTML = hashtags
+        .filter(h => (currentTopic === "all" || h.topic === currentTopic) && h.tag.toLowerCase().includes(keyword))
+        .map(h => `
+          <div class="card" style="margin-bottom:16px;cursor:pointer;" onclick="showHashtagDetail(${h.rank})">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <span style="background:linear-gradient(90deg,#ec4899,#06b6d4);color:#fff;border-radius:50%;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;">${h.rank}</span>
+                <span style="font-weight:bold;color:#fff;margin-left:12px;">${h.tag}</span>
+                <span style="color:#a1a1aa;margin-left:12px;">${h.posts} bài đăng</span>
+              </div>
+              <div style="color:#22c55e;font-weight:bold;">+${h.growth} %</div>
+            </div>
+            <div style="color:#a1a1aa;font-size:1rem;margin-left:48px;">Tăng trưởng 24 giờ</div>
+            <div style="color:#a1a1aa;font-size:1rem;margin-left:48px;">Cập nhật lần cuối: ${h.updated}</div>
+            <button class="btn" style="float:right;margin-top:8px;">Phân tích AI</button>
+          </div>
+        `).join('');
+    }
+    function filterHashtag(topic) {
+      document.querySelectorAll('.filter-group button').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.filter-group button[onclick="filterHashtag(\''+topic+'\')"]').classList.add('active');
+      currentTopic = topic;
+      renderHashtagList();
+    }
+    document.getElementById('hashtag-search').addEventListener('input', renderHashtagList);
+    function showHashtagDetail(rank) {
+      const h = hashtags.find(h => h.rank === rank);
+      document.getElementById('hashtag-detail').innerHTML = `
+        <div><b>${h.tag}</b> - ${h.posts} bài đăng</div>
+        <div>Biểu đồ tăng trưởng AI:</div>
+        <svg width="100%" height="60" viewBox="0 0 200 60">
+          <polyline fill="none" stroke="#ec4899" stroke-width="4"
+            points="0,50 50,40 100,30 150,20 200,10" />
+        </svg>
+        <div>Đề xuất nội dung AI: Video review, livestream, bài viết hướng dẫn, trend tương lai...</div>
+        <div>Lịch sử biến động: Tăng mạnh trong 7 ngày qua. AI dự đoán tiếp tục tăng.</div>
+        <div>Gợi ý hashtag cho sản phẩm/video: #trend, #hot, #viral, #AItrend</div>
+      `;
+    }
+    renderHashtagList();
+
+    // Products demo
+    let products = [];
+    function renderProductTable() {
+      const tbody = document.querySelector('#product-table tbody');
+      tbody.innerHTML = products.map((p,i) => `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.stock}</td>
+          <td>${p.price}</td>
+          <td>${p.performance||'--'}</td>
+          <td>${p.hashtag||'#trend'}</td>
+          <td><button class="btn" onclick="syncShop()">Đồng bộ</button></td>
+          <td>
+            <button class="btn" onclick="deleteProduct(${i})">Xóa</button>
+          </td>
+        </tr>
+      `).join('');
+      // Cập nhật select cho AI Video
+      const select = document.getElementById('ai-product');
+      select.innerHTML = '<option value="">Chọn sản phẩm</option>' + products.map(p => `<option>${p.name}</option>`).join('');
+      document.getElementById('product-count').innerText = products.length;
+    }
+    document.getElementById('product-form').onsubmit = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('product-name').value;
+      const stock = document.getElementById('product-stock').value;
+      const price = document.getElementById('product-price').value;
+      products.push({name, stock, price, performance: "1000 lượt xem", hashtag: "#fyp"});
+      renderProductTable();
+      this.reset();
+    }
+    function deleteProduct(i) {
+      products.splice(i,1);
+      renderProductTable();
+    }
+    function syncShop() {
+      alert("Đồng bộ TikTok Shop thành công! (Demo)");
+    }
+    renderProductTable();
+
+    // AI Video demo
+    let aiVideos = [];
+    document.getElementById('ai-form').onsubmit = function(e) {
+      e.preventDefault();
+      const product = document.getElementById('ai-product').value;
+      const content = document.getElementById('ai-content').value;
+      const template = document.getElementById('ai-template').value;
+      const music = document.getElementById('ai-music').value;
+      aiVideos.push({product, content, template, music, time: new Date().toLocaleString()});
+      renderAIVideoHistory();
+      document.getElementById('video-count').innerText = aiVideos.length;
+      this.reset();
+    }
+    function renderAIVideoHistory() {
+      const box = document.getElementById('ai-history');
+      box.innerHTML = aiVideos.length === 0 ? '<div style="color:#a1a1aa;">Lịch sử video đã tạo sẽ hiển thị ở đây.</div>' :
+        aiVideos.map(v => `<div class="card" style="margin-bottom:8px;">
+          <div><b>${v.product}</b> - ${v.content} (${v.template})<br>Nhạc: ${v.music}</div>
+          <div style="color:#a1a1aa;">${v.time}</div>
+        </div>`).join('');
+    }
+    function autoPostTikTok() {
+      alert("Video AI đã được tự động đăng lên TikTok! (Demo)");
+    }
+    renderAIVideoHistory();
+
+    // Content Strategy demo
+    let strategies = [];
+    document.getElementById('strategy-form').onsubmit = function(e) {
+      e.preventDefault();
+      const title = document.getElementById('strategy-title').value;
+      const date = document.getElementById('strategy-date').value;
+      const type = document.getElementById('strategy-type').value;
+      strategies.push({title, date, type, performance: "Tốt", ai: "Đăng khung giờ vàng, nội dung trend"});
+      renderStrategyTable();
+      this.reset();
+    }
+    function renderStrategyTable() {
+      const tbody = document.querySelector('#strategy-table tbody');
+      tbody.innerHTML = strategies.map(s => `
+        <tr>
+          <td>${s.title}</td>
+          <td>${s.date}</td>
+          <td>${s.type}</td>
+          <td>${s.performance}</td>
+          <td>${s.ai}</td>
+        </tr>
+      `).join('');
+    }
+    function autoSchedule() {
+      alert("Đã tự động lên lịch đăng bài AI! (Demo)");
+    }
+    renderStrategyTable();
+
+    // Analytics demo
+    function compareAnalytics() {
+      alert("So sánh hiệu quả AI giữa các sản phẩm, hashtag, video! (Demo)");
+    }
+
+    // Alert demo
+    function autoAlert() {
+      alert("AI đã tự động gửi cảnh báo cho nhóm và khách hàng! (Demo)");
+    }
+
+    // Tools demo
+    function switchLang(lang) {
+      alert("Đã chuyển sang ngôn ngữ: " + lang + " (Demo)");
+    }
+
+    // Chatbot AI demo
+    let chatbotHistory = [
+      {type: "ai", msg: "🤖 AI: Xin chào! Tôi là trợ lý AI TikTokSalesAI Max Pro VIP. Bạn cần hỗ trợ gì?"}
+    ];
+    document.getElementById('chatbot-form').onsubmit = function(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatbot-input').value;
+      chatbotHistory.push({type: "user", msg: "🧑 Bạn: " + input});
+      // AI trả lời demo
+      let reply = "🤖 AI: Tôi đã phân tích và đề xuất nội dung, hashtag, lịch đăng bài tối ưu cho bạn!";
+      if(input.toLowerCase().includes("hashtag")) reply = "🤖 AI: Hashtag hot hôm nay là #fyp, #AItrend. Đăng video trend ngay!";
+      if(input.toLowerCase().includes("video")) reply = "🤖 AI: Bạn nên tạo video dạng review, sử dụng nhạc nền trending!";
+      if(input.toLowerCase().includes("bán hàng")) reply = "🤖 AI: Sản phẩm bán chạy nhất là #abc. Đề xuất livestream vào 20:00!";
+      chatbotHistory.push({type: "ai", msg: reply});
+      renderChatbot();
+      this.reset();
+    }
+    function renderChatbot() {
+      const box = document.getElementById('chatbot-box');
+      box.innerHTML = chatbotHistory.map(m => `<div class="chatbot-msg ${m.type==='ai'?'chatbot-ai':'chatbot-user'}">${m.msg}</div>`).join('');
+      box.scrollTop = box.scrollHeight;
+    }
+    renderChatbot();
+
+    // Group demo
+    let groupMembers = [
+      {name: "Admin", role: "Quyền tối đa"},
+      {name: "Marketing", role: "Đăng bài, phân tích"},
+      {name: "Bán hàng", role: "Quản lý sản phẩm"}
+    ];
+    document.getElementById('group-form').onsubmit = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('group-input').value;
+      groupMembers.push({name, role: "Thành viên mới"});
+      renderGroup();
+      this.reset();
+    }
+    function renderGroup() {
+      const box = document.getElementById('group-box');
+      box.innerHTML = groupMembers.map(m => `
+        <div class="group-member"><div class="avatar"></div> <b>${m.name}</b> - ${m.role}</div>
+      `).join('');
+    }
+    renderGroup();
+
+    // Mặc định chỉ hiện dashboard
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById('dashboard').classList.add('active');
+  </script>
 </body>
 </html>
