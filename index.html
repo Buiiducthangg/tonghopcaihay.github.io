@@ -319,6 +319,7 @@
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
       document.querySelector('nav button[onclick="showPage(\''+page+'\')"]').classList.add('active');
       document.getElementById(page).classList.add('active');
+      document.getElementById(page).scrollIntoView({ behavior: 'smooth' });
     }
 
     // Hashtag Trends demo data
