@@ -4,43 +4,593 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TikTokSalesAI Max Pro VIP</title>
-  <link rel="stylesheet" href="style.css">
   <style>
-    body { background: linear-gradient(120deg,#18181b 70%,#06b6d4 100%); color: #f3f4f6; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; min-height: 100vh; }
-    .sidebar { background: #23232a; color: #fff; width: 260px; min-height: 100vh; padding: 32px 0 0 0; display: flex; flex-direction: column; align-items: center; border-right: 1px solid #2d2d34; position: fixed; left: 0; top: 0; bottom: 0; box-shadow: 0 0 24px #06b6d4a0; }
-    .logo { font-size: 2rem; font-weight: bold; margin-bottom: 32px; background: linear-gradient(90deg, #ec4899, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
-    nav { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
-    nav button { width: 200px; padding: 12px 0; background: linear-gradient(90deg, #ec4899 20%, #06b6d4 80%); color: #fff; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-bottom: 4px; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px #06b6d4a0; }
-    nav button.active, nav button:hover { background: #06b6d4; color: #fff; box-shadow: 0 4px 16px #ec4899a0; }
-    .user-box { margin-top: 32px; background: #2d2d34; color: #fff; padding: 20px; border-radius: 12px; width: 200px; text-align: center; font-size: 1.1rem; margin-bottom: 24px; box-shadow: 0 2px 8px #0002; }
-    .user-box span { font-size: 1rem; color: #a1a1aa; }
-    .main-content { margin-left: 260px; padding: 40px; width: calc(100vw - 260px); min-height: 100vh; background: rgba(24,24,27,0.95); }
-    .page-section { background: #23232a; border-radius: 16px; box-shadow: 0 4px 24px #06b6d4a0; padding: 40px; margin-bottom: 32px; animation: fadeIn 0.3s; }
-    .section-title { font-size: 2rem; font-weight: bold; margin-bottom: 20px; color: #fff; letter-spacing: 1px; }
-    .section-desc { color: #a1a1aa; font-size: 1.2rem; margin-bottom: 32px; }
-    .flex { display: flex; gap: 32px; }
-    .card { background: #23232a; border-radius: 14px; box-shadow: 0 2px 12px #06b6d4a0; padding: 28px; margin-bottom: 20px; }
-    .btn { background: linear-gradient(90deg,#ec4899,#06b6d4); color: #fff; border: none; border-radius: 12px; padding: 12px 32px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px #06b6d4a0; }
-    .btn:hover { background: #06b6d4; color: #fff; box-shadow: 0 4px 16px #ec4899a0; }
-    .input { padding: 10px; border-radius: 10px; border: 1px solid #333; background: #18181b; color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
-    .table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
-    .table th, .table td { padding: 10px 16px; border-bottom: 1px solid #333; text-align: left; }
-    .table th { background: #23232a; color: #fff; font-size: 1.1rem; }
-    .table td { background: #18181b; color: #f3f4f6; font-size: 1.05rem; }
-    .chart-box { background: #23232a; border-radius: 16px; padding: 32px; margin-bottom: 32px; box-shadow: 0 2px 12px #06b6d4a0; }
-    .alert { background: #f87171; color: #fff; padding: 12px 24px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; }
-    .success { background: #22c55e; color: #fff; padding: 12px 24px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; }
-    .vip { background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4); color: #23232a; font-weight: bold; padding: 10px 24px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; box-shadow: 0 2px 8px #facc15a0; }
-    .avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(90deg,#ec4899,#06b6d4); display: inline-block; margin-right: 12px; }
+    body {
+      background: radial-gradient(ellipse at top left, #23232a 60%, #18181b 100%);
+      color: #f3f4f6;
+      font-family: 'Segoe UI', 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      letter-spacing: 0.02em;
+    }
+    .sidebar {
+      background: linear-gradient(120deg, #23232a 80%, #06b6d4 100%);
+      color: #fff;
+      width: 260px;
+      min-height: 100vh;
+      padding: 32px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 1px solid #2d2d34;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      box-shadow: 0 0 32px #06b6d4a0, 0 0 0 4px #ec489980 inset;
+    }
+    .logo {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 36px;
+      background: linear-gradient(90deg, #facc15, #ec4899, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 12px #06b6d4a0;
+    }
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      align-items: center;
+    }
+    nav button {
+      width: 200px;
+      padding: 14px 0;
+      background: linear-gradient(90deg, #ec4899 10%, #06b6d4 90%);
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 4px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 2px 12px #06b6d4a0;
+      text-shadow: 0 1px 4px #23232a;
+    }
+    nav button.active, nav button:hover {
+      background: linear-gradient(90deg, #facc15 10%, #ec4899 50%, #06b6d4 90%);
+      color: #23232a;
+      box-shadow: 0 4px 24px #ec4899a0;
+      transform: scale(1.05);
+    }
+    .user-box {
+      margin-top: 36px;
+      background: linear-gradient(90deg, #23232a 80%, #06b6d4 100%);
+      color: #fff;
+      padding: 22px;
+      border-radius: 16px;
+      width: 200px;
+      text-align: center;
+      font-size: 1.15rem;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 12px #06b6d4a0;
+      border: 2px solid #ec4899;
+    }
+    .user-box span {
+      font-size: 1rem;
+      color: #facc15;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(90deg,#ec4899,#06b6d4,#facc15);
+      display: inline-block;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 12px #06b6d4a0;
+    }
+    .main-content {
+      margin-left: 260px;
+      padding: 48px 4vw 32px 4vw;
+      width: calc(100vw - 260px);
+      min-height: 100vh;
+      background: linear-gradient(120deg, #18181b 80%, #23232a 100%);
+    }
+    .page-section {
+      background: linear-gradient(120deg, #23232a 80%, #18181b 100%);
+      border-radius: 24px;
+      box-shadow: 0 4px 32px #06b6d4a0, 0 0 0 2px #ec489980 inset;
+      padding: 44px 3vw 36px 3vw;
+      margin-bottom: 36px;
+      animation: fadeIn 0.3s;
+      border: 1px solid #23232a;
+      display: none;
+    }
+    .page-section.active { display: block; }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 24px;
+      color: #facc15;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #06b6d4a0;
+    }
+    .section-desc {
+      color: #a1a1aa;
+      font-size: 1.25rem;
+      margin-bottom: 36px;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    }
+    .flex { display: flex; gap: 36px; }
+    .card {
+      background: linear-gradient(90deg, #23232a 80%, #18181b 100%);
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #06b6d4a0;
+      padding: 32px;
+      margin-bottom: 22px;
+      border: 1px solid #06b6d4;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 32px #ec4899a0;
+      border: 1px solid #ec4899;
+    }
+    .btn, button {
+      background: linear-gradient(90deg,#ec4899,#06b6d4,#facc15);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 32px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 2px 12px #06b6d4a0;
+      text-shadow: 0 1px 4px #23232a;
+    }
+    .btn:hover, button:hover {
+      background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4);
+      color: #23232a;
+      box-shadow: 0 4px 24px #ec4899a0;
+      transform: scale(1.04);
+    }
+    .input {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      background: #18181b;
+      color: #fff;
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+      font-size: 1.08rem;
+    }
+    .table th, .table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid #333;
+      text-align: left;
+    }
+    .table th {
+      background: #23232a;
+      color: #facc15;
+      font-size: 1.13rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .table td {
+      background: #18181b;
+      color: #f3f4f6;
+      font-size: 1.08rem;
+    }
+    .chart-box {
+      background: linear-gradient(90deg, #23232a 80%, #18181b 100%);
+      border-radius: 18px;
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: 0 2px 16px #06b6d4a0;
+      border: 1px solid #06b6d4;
+    }
+    .alert {
+      background: linear-gradient(90deg,#f87171,#ec4899);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      box-shadow: 0 2px 12px #ec4899a0;
+    }
+    .success {
+      background: linear-gradient(90deg,#22c55e,#06b6d4);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      box-shadow: 0 2px 12px #06b6d4a0;
+    }
+    .vip {
+      background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4);
+      color: #23232a;
+      font-weight: bold;
+      padding: 12px 28px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      font-size: 1.15rem;
+      box-shadow: 0 2px 12px #facc15a0;
+      text-shadow: 0 1px 4px #fff2;
+    }
+    /* Hashtag trends đẹp hơn */
+    #hashtag-list .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(90deg, #23232a 80%, #06b6d4 100%);
+      border: 2px solid #06b6d4;
+      box-shadow: 0 2px 12px #06b6d4a0;
+      padding: 20px 28px;
+      margin-bottom: 20px;
+      border-radius: 20px;
+      transition: box-shadow 0.2s, border 0.2s;
+      font-size: 1.13rem;
+    }
+    #hashtag-list .card:hover {
+      box-shadow: 0 4px 32px #ec4899a0;
+      border: 2px solid #ec4899;
+      background: linear-gradient(90deg, #23232a 60%, #ec4899 100%);
+    }
+    .hashtag-rank {
+      background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4);
+      color: #23232a;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.25rem;
+      margin-right: 16px;
+      box-shadow: 0 2px 12px #06b6d4a0;
+      border: 2px solid #ec4899;
+    }
+    .hashtag-tag {
+      font-weight: bold;
+      color: #fff;
+      font-size: 1.15rem;
+      margin-right: 12px;
+      letter-spacing: 1px;
+    }
+    .hashtag-posts {
+      color: #a1a1aa;
+      font-size: 1.05rem;
+      margin-right: 12px;
+    }
+    .hashtag-growth {
+      color: #22c55e;
+      font-weight: bold;
+      font-size: 1.15rem;
+      margin-right: 12px;
+      text-shadow: 0 1px 4px #22c55e44;
+    }
+    .hashtag-btn {
+      background: linear-gradient(90deg,#ec4899,#06b6d4,#facc15);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 22px;
+      font-size: 1.08rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #ec4899a0;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      text-shadow: 0 1px 4px #23232a;
+    }
+    .hashtag-btn:hover {
+      background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4);
+      color: #23232a;
+      box-shadow: 0 4px 24px #ec4899a0;
+      transform: scale(1.04);
+    }
+    @media (max-width: 900px) {
+      .sidebar {
+        position: relative;
+        width: 100vw;
+        min-height: auto;
+        flex-direction: row;
+        padding: 8px 0;
+        border-right: none;
+        border-bottom: 1px solid #2d2d34;
+        box-shadow: none;
+        z-index: 10;
+      }
+      .logo {
+        margin-bottom: 0;
+        font-size: 1.1rem;
+        padding: 0 8px;
+        text-align: left;
+      }
+      nav {
+        flex-direction: row;
+        gap: 6px;
+        width: auto;
+        align-items: center;
+        padding: 0 8px;
+      }
+      nav button {
+        width: auto;
+        padding: 8px 10px;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        border-radius: 8px;
+        min-width: 90px;
+        max-width: 120px;
+        white-space: nowrap;
+      }
+      .user-box {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 12px 2vw;
+        width: 100vw;
+      }
+      .page-section {
+        padding: 12px 2vw;
+        margin-bottom: 12px;
+        border-radius: 10px;
+      }
+      .card, .chart-box {
+        padding: 10px 2vw;
+        border-radius: 10px;
+      }
+      #hashtag-list .card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 2vw;
+        font-size: 0.98rem;
+      }
+      .hashtag-btn {
+        width: 100%;
+        margin-top: 8px;
+        font-size: 0.98rem;
+        padding: 8px 0;
+      }
+      .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+      }
+      .section-desc {
+        font-size: 1rem;
+        margin-bottom: 16px;
+      }
+      .table th, .table td {
+        padding: 8px 4px;
+        font-size: 0.95rem;
+        word-break: break-word;
+      }
+      .input {
+        font-size: 1rem;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        flex-direction: column;
+        width: 100vw;
+        padding: 6px 0;
+        min-width: 0;
+      }
+      nav {
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 2px;
+      }
+      nav button {
+        width: 100vw;
+        padding: 10px 0;
+        font-size: 1rem;
+        border-radius: 0;
+        min-width: 0;
+        max-width: 100vw;
+      }
+      .main-content {
+        padding: 6px 2vw;
+      }
+      .page-section {
+        padding: 8px 2vw;
+        margin-bottom: 8px;
+        border-radius: 6px;
+      }
+      .card, .chart-box {
+        padding: 8px 2vw;
+        border-radius: 6px;
+      }
+      #hashtag-list .card {
+        padding: 8px 2vw;
+        font-size: 0.95rem;
+      }
+      .section-title {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+      .section-desc {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+      }
+      .input {
+        font-size: 0.95rem;
+        padding: 6px;
+      }
+      .table th, .table td {
+        padding: 6px 2px;
+        font-size: 0.9rem;
+        word-break: break-word;
+      }
+    }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(24px);} to { opacity: 1; transform: none;} }
-    .chatbot-box { background: #18181b; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px #06b6d4a0; }
-    .chatbot-msg { margin-bottom: 12px; }
-    .chatbot-user { color: #06b6d4; font-weight: bold; }
-    .chatbot-ai { color: #ec4899; font-weight: bold; }
-    .group-box { background: #18181b; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px #06b6d4a0; }
-    .group-member { display: flex; align-items: center; margin-bottom: 8px; }
-    .group-member .avatar { margin-right: 8px; }
-    .switch-lang { margin-top: 16px; }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(24,24,27,0.92);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #23232a;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #06b6d4a0;
+      padding: 24px 4vw;
+      max-width: 98vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: #f3f4f6;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px; right: 18px;
+      background: none;
+      border: none;
+      color: #ec4899;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .modal h2 {
+      margin-top: 0;
+      color: #facc15;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+    .modal label {
+      font-weight: bold;
+      color: #f3f4f6;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .modal .input {
+      margin-bottom: 16px;
+    }
+    .modal .btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .modal .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Thêm vào cuối file index.html, ngay sau <body> */
+    #add-product-modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .add-product-modal {
+      max-width: 420px;
+      width: 96vw;
+      background: #18181b;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px #000a, 0 0 0 2px #23232a;
+      padding: 32px 24px 24px 24px;
+      position: relative;
+      animation: fadeIn 0.25s;
+    }
+    .modal-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f3f4f6;
+      letter-spacing: 1px;
+    }
+    .modal-form .form-group {
+      margin-bottom: 16px;
+    }
+    .modal-form label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f3f4f6;
+      margin-bottom: 6px;
+    }
+    .modal-form .input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #23232a;
+      background: #23232a;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0;
+      box-sizing: border-box;
+      transition: border 0.2s;
+    }
+    .modal-form .input:focus {
+      border: 1.5px solid #06b6d4;
+      outline: none;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .btn-cancel {
+      background: #23232a;
+      color: #fff;
+      border: 1px solid #333;
+      font-weight: 600;
+    }
+    .btn-gradient {
+      background: linear-gradient(90deg,#ec4899,#06b6d4,#facc15);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 2px 12px #06b6d4a0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-gradient:hover {
+      background: linear-gradient(90deg,#facc15,#ec4899,#06b6d4);
+      color: #23232a;
+      transform: scale(1.04);
+    }
+    @media (max-width: 600px) {
+      .add-product-modal {
+        padding: 18px 6px 12px 6px;
+        max-width: 98vw;
+        border-radius: 12px;
+      }
+      .modal-title { font-size: 1.1rem; }
+    }
   </style>
 </head>
 <body>
@@ -59,6 +609,7 @@
       <button onclick="showPage('chatbot')">Chatbot AI</button>
       <button onclick="showPage('group')">Quản Lý Nhóm</button>
       <button onclick="showPage('sync')">Đồng Bộ TikTok Shop</button>
+      <button onclick="showPage('game')">Trò Chơi AI</button>
     </nav>
     <div class="user-box">
       <div class="avatar"></div>
@@ -143,18 +694,14 @@
     <section id="product" class="page-section">
       <div class="section-title">Quản Lý Sản Phẩm AI</div>
       <div class="section-desc">Thêm/xóa/sửa sản phẩm, theo dõi hiệu suất, đề xuất hashtag AI, đồng bộ TikTok Shop.</div>
-      <form id="product-form" style="margin-bottom:16px;">
-        <input class="input" type="text" id="product-name" placeholder="Tên sản phẩm" required>
-        <input class="input" type="number" id="product-stock" placeholder="Tồn kho" required>
-        <input class="input" type="number" id="product-price" placeholder="Giá" required>
-        <button class="btn" type="submit">Thêm sản phẩm</button>
-      </form>
+      <button class="btn" type="button" onclick="openProductModal()">Thêm sản phẩm mới</button>
       <table class="table" id="product-table">
         <thead>
           <tr>
             <th>Tên sản phẩm</th>
-            <th>Tồn kho</th>
+            <th>Danh mục</th>
             <th>Giá</th>
+            <th>Mô tả</th>
             <th>Hiệu suất</th>
             <th>Hashtag đề xuất</th>
             <th>Đồng bộ TikTok Shop</th>
@@ -183,6 +730,7 @@
           <option value="ai">AI Đề xuất</option>
         </select>
         <input class="input" type="text" id="ai-music" placeholder="Nhạc nền AI" required>
+        <input class="input" type="file" id="ai-file" accept="video/*" required>
         <button class="btn" type="submit">Tạo video AI</button>
       </form>
       <div id="ai-history">
@@ -312,6 +860,65 @@
       <button class="btn" onclick="syncShop()">Đồng bộ ngay</button>
       <div style="color:#a1a1aa;margin-top:16px;">Lịch sử đồng bộ, trạng thái kết nối, tự động cập nhật mỗi giờ.</div>
     </section>
+    <!-- 13. Trò Chơi AI -->
+    <section id="game" class="page-section">
+      <div class="section-title">Trò Chơi AI: Đoán Từ Khóa Bí Mật</div>
+      <div class="section-desc">Thử thách trí tuệ: Đoán đúng từ khóa AI liên quan TikTok, sản phẩm, hashtag!</div>
+      <div class="card" style="text-align:center;">
+        <div id="game-box">
+          <b>Gợi ý: <span id="game-hint"></span></b><br>
+          <input class="input" type="text" id="game-input" placeholder="Nhập từ khóa bạn đoán">
+          <button class="btn" onclick="playGame()">Đoán</button>
+          <div id="game-result" style="margin-top:12px;color:#facc15;"></div>
+          <button class="btn" style="margin-top:16px;" onclick="newGame()">Chơi lại</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Modal Thêm Sản Phẩm -->
+  <div id="add-product-modal" class="modal" style="display:none;">
+    <div class="modal-content add-product-modal">
+      <button class="modal-close" onclick="closeProductModal()">&times;</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Thêm Sản Phẩm Mới</h2>
+      </div>
+      <form id="modal-product-form" class="modal-form">
+        <div class="form-group">
+          <label for="product-name-modal">Tên sản phẩm</label>
+          <input class="input" type="text" name="name" id="product-name-modal" required placeholder="Nhập tên sản phẩm">
+        </div>
+        <div class="form-group">
+          <label for="product-category-modal">Danh mục</label>
+          <select class="input" name="category" id="product-category-modal" required>
+            <option value="">Chọn danh mục</option>
+            <option>Điện tử</option>
+            <option>Thời trang</option>
+            <option>Nhà cửa & Vườn</option>
+            <option>Thể thao</option>
+            <option>Làm đẹp</option>
+            <option>Đồ chơi</option>
+            <option>Sách</option>
+            <option>Sức khỏe</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="product-price-modal">Giá</label>
+          <input class="input" type="number" name="price" id="product-price-modal" required placeholder="0.00" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="product-desc-modal">Mô tả (tuỳ chọn)</label>
+          <textarea class="input" name="description" id="product-desc-modal" rows="2" placeholder="Mô tả sản phẩm"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="product-img-modal">Ảnh sản phẩm (URL, tuỳ chọn)</label>
+          <input class="input" type="url" name="imageUrl" id="product-img-modal" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" onclick="closeProductModal()">Huỷ</button>
+          <button type="submit" class="btn btn-gradient">Thêm sản phẩm</button>
+        </div>
+      </form>
+    </div>
   </div>
   <script>
     function showPage(page) {
@@ -383,8 +990,9 @@
       tbody.innerHTML = products.map((p,i) => `
         <tr>
           <td>${p.name}</td>
-          <td>${p.stock}</td>
+          <td>${p.category||''}</td>
           <td>${p.price}</td>
+          <td>${p.description||''}</td>
           <td>${p.performance||'--'}</td>
           <td>${p.hashtag||'#trend'}</td>
           <td><button class="btn" onclick="syncShop()">Đồng bộ</button></td>
@@ -398,15 +1006,6 @@
       select.innerHTML = '<option value="">Chọn sản phẩm</option>' + products.map(p => `<option>${p.name}</option>`).join('');
       document.getElementById('product-count').innerText = products.length;
     }
-    document.getElementById('product-form').onsubmit = function(e) {
-      e.preventDefault();
-      const name = document.getElementById('product-name').value;
-      const stock = document.getElementById('product-stock').value;
-      const price = document.getElementById('product-price').value;
-      products.push({name, stock, price, performance: "1000 lượt xem", hashtag: "#fyp"});
-      renderProductTable();
-      this.reset();
-    }
     function deleteProduct(i) {
       products.splice(i,1);
       renderProductTable();
@@ -416,6 +1015,30 @@
     }
     renderProductTable();
 
+    // Modal Thêm Sản Phẩm
+    function openProductModal() {
+      document.getElementById('add-product-modal').style.display = 'flex';
+    }
+    function closeProductModal() {
+      document.getElementById('add-product-modal').style.display = 'none';
+    }
+    document.getElementById('modal-product-form').onsubmit = function(e) {
+      e.preventDefault();
+      const fd = new FormData(this);
+      products.push({
+        name: fd.get('name'),
+        category: fd.get('category'),
+        price: fd.get('price'),
+        description: fd.get('description'),
+        imageUrl: fd.get('imageUrl'),
+        performance: "1000 lượt xem",
+        hashtag: "#fyp"
+      });
+      renderProductTable();
+      closeProductModal();
+      this.reset();
+    };
+
     // AI Video demo
     let aiVideos = [];
     document.getElementById('ai-form').onsubmit = function(e) {
@@ -424,7 +1047,11 @@
       const content = document.getElementById('ai-content').value;
       const template = document.getElementById('ai-template').value;
       const music = document.getElementById('ai-music').value;
-      aiVideos.push({product, content, template, music, time: new Date().toLocaleString()});
+      const fileInput = document.getElementById('ai-file');
+      const file = fileInput.files[0];
+      if (!file) return alert("Vui lòng chọn video!");
+      const url = URL.createObjectURL(file);
+      aiVideos.push({product, content, template, music, file, url, time: new Date().toLocaleString()});
       renderAIVideoHistory();
       document.getElementById('video-count').innerText = aiVideos.length;
       this.reset();
@@ -434,6 +1061,8 @@
       box.innerHTML = aiVideos.length === 0 ? '<div style="color:#a1a1aa;">Lịch sử video đã tạo sẽ hiển thị ở đây.</div>' :
         aiVideos.map(v => `<div class="card" style="margin-bottom:8px;">
           <div><b>${v.product}</b> - ${v.content} (${v.template})<br>Nhạc: ${v.music}</div>
+          <video src="${v.url}" controls style="width:100%;max-width:320px;margin:8px 0;border-radius:8px;"></video>
+          <a href="${v.url}" download="video-ai.mp4" class="btn" style="margin-top:8px;">Tải video về</a>
           <div style="color:#a1a1aa;">${v.time}</div>
         </div>`).join('');
     }
@@ -499,40 +1128,66 @@
       if(input.toLowerCase().includes("video")) reply = "🤖 AI: Bạn nên tạo video dạng review, sử dụng nhạc nền trending!";
       if(input.toLowerCase().includes("bán hàng")) reply = "🤖 AI: Sản phẩm bán chạy nhất là #abc. Đề xuất livestream vào 20:00!";
       chatbotHistory.push({type: "ai", msg: reply});
-      renderChatbot();
-      this.reset();
+      renderChatbotHistory();
+      document.getElementById('chatbot-input').value = '';
     }
-    function renderChatbot() {
+    function renderChatbotHistory() {
       const box = document.getElementById('chatbot-box');
-      box.innerHTML = chatbotHistory.map(m => `<div class="chatbot-msg ${m.type==='ai'?'chatbot-ai':'chatbot-user'}">${m.msg}</div>`).join('');
+      box.innerHTML = chatbotHistory.map(h => h.type === "ai" ? `<div class="chatbot-msg chatbot-ai">${h.msg}</div>` : `<div class="chatbot-msg chatbot-user">${h.msg}</div>`).join('');
       box.scrollTop = box.scrollHeight;
     }
-    renderChatbot();
+    renderChatbotHistory();
 
     // Group demo
-    let groupMembers = [
-      {name: "Admin", role: "Quyền tối đa"},
-      {name: "Marketing", role: "Đăng bài, phân tích"},
-      {name: "Bán hàng", role: "Quản lý sản phẩm"}
-    ];
     document.getElementById('group-form').onsubmit = function(e) {
       e.preventDefault();
-      const name = document.getElementById('group-input').value;
-      groupMembers.push({name, role: "Thành viên mới"});
-      renderGroup();
+      const input = document.getElementById('group-input').value;
+      const newMember = {name: input, role: "Thành viên", avatar: "https://ui-avatars.com/api/?name="+encodeURIComponent(input)};
+      document.getElementById('group-box').insertAdjacentHTML('beforeend', `
+        <div class="group-member">
+          <div class="avatar" style="background-image:url('${newMember.avatar}')"></div>
+          <b>${newMember.name}</b> - ${newMember.role}
+        </div>
+      `);
       this.reset();
     }
-    function renderGroup() {
-      const box = document.getElementById('group-box');
-      box.innerHTML = groupMembers.map(m => `
-        <div class="group-member"><div class="avatar"></div> <b>${m.name}</b> - ${m.role}</div>
-      `).join('');
-    }
-    renderGroup();
 
-    // Mặc định chỉ hiện dashboard
-    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-    document.getElementById('dashboard').classList.add('active');
+    // Game AI demo
+    const keywords = ["fyp", "tiktok", "hashtag", "video", "ai", "sản phẩm", "bán hàng", "livestream", "quảng cáo", "chiến lược"];
+    let currentKeyword = "";
+    // Trò chơi đoán từ khóa AI
+    const gameWords = [
+      {word: "hashtag", hint: "Từ khóa giúp video viral trên TikTok"},
+      {word: "fyp", hint: "Trang đề xuất video TikTok"},
+      {word: "trend", hint: "Xu hướng hot trên mạng xã hội"},
+      {word: "livestream", hint: "Bán hàng trực tiếp trên TikTok"},
+      {word: "shop", hint: "Nơi bán sản phẩm trên TikTok"},
+      {word: "ai", hint: "Trí tuệ nhân tạo hỗ trợ marketing"},
+      {word: "viral", hint: "Video lan truyền mạnh mẽ"},
+      {word: "review", hint: "Nội dung đánh giá sản phẩm"},
+      {word: "maxpro", hint: "Gói dịch vụ cao cấp TikTokSalesAI"}
+    ];
+    let gameIndex = Math.floor(Math.random() * gameWords.length);
+    function newGame() {
+      gameIndex = Math.floor(Math.random() * gameWords.length);
+      document.getElementById('game-hint').innerText = gameWords[gameIndex].hint;
+      document.getElementById('game-result').innerText = '';
+      document.getElementById('game-input').value = '';
+    }
+    function playGame() {
+      const val = document.getElementById('game-input').value.trim().toLowerCase();
+      if (!val) {
+        document.getElementById('game-result').innerText = "Vui lòng nhập từ khóa!";
+        return;
+      }
+      if (val === gameWords[gameIndex].word) {
+        document.getElementById('game-result').innerText = `🎉 Chính xác! Từ khóa là "${gameWords[gameIndex].word.toUpperCase()}". Bạn rất thông minh!`;
+      } else {
+        document.getElementById('game-result').innerText = "Sai rồi, thử lại nhé!";
+      }
+      document.getElementById('game-input').value = '';
+    }
+    newGame();
   </script>
 </body>
 </html>
