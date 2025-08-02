@@ -1,0 +1,146 @@
+/* Màu nền tổng thể */
+body {
+  background: #18181b;
+  color: #f3f4f6;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  background: #23232a;
+  color: #fff;
+  width: 240px;
+  min-height: 100vh;
+  padding: 32px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #2d2d34;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 32px;
+  background: linear-gradient(90deg, #ec4899, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+}
+
+nav button {
+  width: 180px;
+  padding: 10px 0;
+  background: linear-gradient(90deg, #ec4899 20%, #06b6d4 80%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+nav button:not(.active):hover {
+  background: #2d2d34;
+  color: #ec4899;
+}
+
+.user-box {
+  background: #2d2d34;
+  color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  width: 180px;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 32px; /* chỉnh lên cao hơn */
+  margin-bottom: 24px;
+}
+
+.user-box span {
+  font-size: 0.9rem;
+  color: #a1a1aa;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 240px;
+  padding: 32px;
+  width: calc(100vw - 240px);
+  min-height: 100vh;
+  background: #18181b;
+}
+
+.page-section {
+  background: #23232a;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+  padding: 32px;
+  margin-bottom: 24px;
+  animation: fadeIn 0.3s;
+}
+
+.page-section h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.page-section p {
+  color: #a1a1aa;
+  font-size: 1.1rem;
+}
+
+/* Card, button, etc. */
+.card {
+  background: #23232a;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0002;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #ec4899, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button, .btn {
+  background: linear-gradient(90deg, #ec4899 20%, #06b6d4 80%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+button:hover, .btn:hover {
+  background: #06b6d4;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px);}
+  to { opacity: 1; transform: none;}
+}
