@@ -11,12 +11,12 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #050505;
+            background-color: #e9ecef; /* Nền ngoài xám nhạt dịu mắt */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #fff;
+            color: #2d3436; /* Chữ xám than chì, dễ đọc hơn đen tuyền */
             overflow: hidden;
         }
 
@@ -26,14 +26,14 @@
             width: 90vw;
             aspect-ratio: 16 / 9;
             position: relative;
-            background: radial-gradient(circle at top right, #1A2A42, #0A1128);
+            background: radial-gradient(circle at top right, #ffffff, #f4f6f9); /* Gradient trắng sang xám ngọc trai */
             border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02); /* Đổ bóng viền mềm mại */
             overflow: hidden;
             perspective: 1500px;
         }
 
-        /* HIỆU ỨNG 3D */
+        /* HIỆU ỨNG 3D (Giữ nguyên logic chuyển động) */
         .mySlides {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -53,22 +53,31 @@
         .mySlides.leaving { opacity: 0; visibility: hidden; transform: translateX(-150px) scale(0.85) rotateY(15deg); filter: blur(15px); z-index: 1; }
         .mySlides.leaving-reverse { opacity: 0; visibility: hidden; transform: translateX(150px) scale(0.85) rotateY(-15deg); filter: blur(15px); z-index: 1; }
 
-        /* TYPOGRAPHY */
-        h1, h2, h3 { font-family: 'Playfair Display', serif; color: #D4AF37; font-weight: 600; }
-        .slide-header { font-size: 2.2rem; margin-bottom: 20px; border-bottom: 2px solid #D4AF37; padding-bottom: 10px; display: inline-block; }
+        /* TYPOGRAPHY (Màu vàng ấm hơn để nổi trên nền sáng) */
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: #b3884d; font-weight: 600; }
+        .slide-header { font-size: 2.2rem; margin-bottom: 20px; border-bottom: 2px solid #b3884d; padding-bottom: 10px; display: inline-block; }
         .content { font-size: 1.1rem; line-height: 1.6; }
         .content ul { margin-left: 20px; margin-top: 10px; }
         .content li { margin-bottom: 12px; }
-        .highlight { color: #D4AF37; font-weight: bold; }
+        .highlight { color: #b3884d; font-weight: bold; }
 
         /* LAYOUT & CARDS */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 10px; align-items: center; }
         .grid-2-text-img { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 10px; align-items: stretch; height: 60vh;}
-        .card { background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 10px 20px rgba(0,0,0,0.2);}
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid rgba(255,255,255,0.2); padding: 10px; text-align: left; }
-        th { background: rgba(212, 175, 55, 0.2); color: #D4AF37; }
+        /* Card nền trắng tinh để nổi bật trên nền xám nhạt */
+        .card { 
+            background: #ffffff; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border: 1px solid rgba(179, 136, 77, 0.2); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+        
+        /* BẢNG (TABLE) */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        th, td { border-bottom: 1px solid #edf2f7; padding: 12px 15px; text-align: left; }
+        th { background: rgba(179, 136, 77, 0.1); color: #b3884d; }
 
         /* STYLE CHO ẢNH MINH HỌA */
         .slide-img-container {
@@ -76,10 +85,10 @@
             height: 100%;
             border-radius: 12px;
             overflow: hidden;
-            border: 2px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 2px solid rgba(179, 136, 77, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             position: relative;
-            background: #000;
+            background: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -98,21 +107,35 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0,0,0,0.7);
-            color: #D4AF37;
+            background: rgba(255, 255, 255, 0.9); /* Chú thích nền trắng bán trong suốt */
+            color: #b3884d;
             padding: 10px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(179, 136, 77, 0.1);
         }
 
-        /* ĐIỀU HƯỚNG */
-        .prev, .next { cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; color: #D4AF37; font-weight: bold; font-size: 24px; transition: 0.3s ease; border-radius: 50%; border: 2px solid #D4AF37; display: flex; justify-content: center; align-items: center; background: rgba(10, 17, 40, 0.8); user-select: none; z-index: 100; }
+        /* ĐIỀU HƯỚNG NÚT BẤM VÀ CHẤM TRÒN */
+        .prev, .next { 
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); 
+            width: 50px; height: 50px; color: #b3884d; font-weight: bold; font-size: 24px; 
+            transition: 0.3s ease; border-radius: 50%; border: 2px solid #b3884d; 
+            display: flex; justify-content: center; align-items: center; 
+            background: rgba(255, 255, 255, 0.9); user-select: none; z-index: 100; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
         .prev { left: 20px; } .next { right: 20px; }
-        .prev:hover, .next:hover { background-color: #D4AF37; color: #0A1128; box-shadow: 0 0 15px #D4AF37;}
+        .prev:hover, .next:hover { background-color: #b3884d; color: #ffffff; box-shadow: 0 0 15px rgba(179, 136, 77, 0.4);}
+        
         .dots-container { position: absolute; bottom: 20px; width: 100%; text-align: center; z-index: 100; }
-        .dot { cursor: pointer; height: 10px; width: 10px; margin: 0 4px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; display: inline-block; transition: all 0.3s ease; }
-        .dot.active, .dot:hover { background-color: #D4AF37; transform: scale(1.5); box-shadow: 0 0 8px #D4AF37;}
+        .dot { 
+            cursor: pointer; height: 10px; width: 10px; margin: 0 4px; 
+            background-color: rgba(0, 0, 0, 0.15); /* Chấm xám nhạt */
+            border-radius: 50%; display: inline-block; transition: all 0.3s ease; 
+        }
+        .dot.active, .dot:hover { background-color: #b3884d; transform: scale(1.5); box-shadow: 0 0 8px rgba(179, 136, 77, 0.4);}
     </style>
 </head>
 <body>
