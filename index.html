@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trình Chiếu Đồ Án: Website Bán Nước Hoa (Có Ảnh Minh Họa)</title>
-    <style>
+    <title>Trình Chiếu Đồ Án: Website Bán Nước Hoa</title>
+     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #e9ecef; /* Nền ngoài xám nhạt dịu mắt */
+            background-color: #e9ecef;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #2d3436; /* Chữ xám than chì, dễ đọc hơn đen tuyền */
+            color: #2d3436;
             overflow: hidden;
         }
 
-        /* CONTAINER */
+        /* Tính năng tự động scale chữ theo màn hình để khi ấn F11 không bị nhỏ */
+        html { font-size: 16px; }
+        @media (min-width: 1400px) { html { font-size: 18px; } }
+        @media (min-width: 1800px) { html { font-size: 21px; } }
+
         .slideshow-container {
-            max-width: 1200px;
-            width: 90vw;
+            /* THAY ĐỔI LỚN NHẤT TẠI ĐÂY: Loại bỏ giới hạn 1200px, ép tràn màn hình 95% theo chuẩn 16:9 */
+            width: 95vw;
+            max-width: calc(95vh * 16 / 9);
             aspect-ratio: 16 / 9;
             position: relative;
-            background: radial-gradient(circle at top right, #ffffff, #f4f6f9); /* Gradient trắng sang xám ngọc trai */
+            background: radial-gradient(circle at top right, #ffffff, #f4f6f9);
             border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02); /* Đổ bóng viền mềm mại */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02);
             overflow: hidden;
             perspective: 1500px;
         }
 
-        /* HIỆU ỨNG 3D (Giữ nguyên logic chuyển động) */
         .mySlides {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -53,7 +57,6 @@
         .mySlides.leaving { opacity: 0; visibility: hidden; transform: translateX(-150px) scale(0.85) rotateY(15deg); filter: blur(15px); z-index: 1; }
         .mySlides.leaving-reverse { opacity: 0; visibility: hidden; transform: translateX(150px) scale(0.85) rotateY(-15deg); filter: blur(15px); z-index: 1; }
 
-        /* TYPOGRAPHY (Màu vàng ấm hơn để nổi trên nền sáng) */
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: #b3884d; font-weight: 600; }
         .slide-header { font-size: 2.2rem; margin-bottom: 20px; border-bottom: 2px solid #b3884d; padding-bottom: 10px; display: inline-block; }
         .content { font-size: 1.1rem; line-height: 1.6; }
@@ -61,11 +64,9 @@
         .content li { margin-bottom: 12px; }
         .highlight { color: #b3884d; font-weight: bold; }
 
-        /* LAYOUT & CARDS */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 10px; align-items: center; }
         .grid-2-text-img { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 10px; align-items: stretch; height: 60vh;}
         
-        /* Card nền trắng tinh để nổi bật trên nền xám nhạt */
         .card { 
             background: #ffffff; 
             padding: 20px; 
@@ -74,12 +75,10 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.04);
         }
         
-        /* BẢNG (TABLE) */
         table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         th, td { border-bottom: 1px solid #edf2f7; padding: 12px 15px; text-align: left; }
         th { background: rgba(179, 136, 77, 0.1); color: #b3884d; }
 
-        /* STYLE CHO ẢNH MINH HỌA */
         .slide-img-container {
             width: 100%;
             height: 100%;
@@ -93,7 +92,7 @@
             justify-content: center;
             align-items: center;
         }
-        .slide-img-container img {
+        .slide-img-container img, .slide-img-container iframe {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -107,7 +106,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.9); /* Chú thích nền trắng bán trong suốt */
+            background: rgba(255, 255, 255, 0.9);
             color: #b3884d;
             padding: 10px;
             text-align: center;
@@ -117,7 +116,6 @@
             border-top: 1px solid rgba(179, 136, 77, 0.1);
         }
 
-        /* ĐIỀU HƯỚNG NÚT BẤM VÀ CHẤM TRÒN */
         .prev, .next { 
             cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); 
             width: 50px; height: 50px; color: #b3884d; font-weight: bold; font-size: 24px; 
@@ -132,7 +130,7 @@
         .dots-container { position: absolute; bottom: 20px; width: 100%; text-align: center; z-index: 100; }
         .dot { 
             cursor: pointer; height: 10px; width: 10px; margin: 0 4px; 
-            background-color: rgba(0, 0, 0, 0.15); /* Chấm xám nhạt */
+            background-color: rgba(0, 0, 0, 0.15);
             border-radius: 50%; display: inline-block; transition: all 0.3s ease; 
         }
         .dot.active, .dot:hover { background-color: #b3884d; transform: scale(1.5); box-shadow: 0 0 8px rgba(179, 136, 77, 0.4);}
@@ -142,16 +140,17 @@
 
     <div class="slideshow-container">
 
-        <div class="mySlides" style="align-items: center; text-align: center; background: linear-gradient(rgba(10, 17, 40, 0.8), rgba(10, 17, 40, 0.9)), url('https://i.pinimg.com/736x/1d/9a/04/1d9a04be36a3e8fda6e77022ef6fa7f0.jpg') center/cover;">
-            <h2 style="font-size: 2rem; color: #fff; text-shadow: 2px 2px 4px #000;">ĐỒ ÁN PHÂN TÍCH HỆ THỐNG</h2>
-            <h1 style="font-size: 4.5rem; margin: 20px 0; text-shadow: 2px 2px 8px #000;">Website Bán Nước Hoa</h1>
-            <h3 style="font-size: 1.5rem; color: #ccc; text-shadow: 1px 1px 3px #000;">Hệ Thống Quản Lý & Kinh Doanh Trực Tuyến Hiện Đại</h3>
+        <div class="mySlides" style="align-items: center; text-align: center; background: linear-gradient(rgba(244, 246, 249, 0.85), rgba(255, 255, 255, 0.95)), url('https://i.pinimg.com/736x/1d/9a/04/1d9a04be36a3e8fda6e77022ef6fa7f0.jpg') center/cover;">
+            <h2 style="font-size: 2.2rem; color: #2d3436; margin-bottom: 10px;">ĐỒ ÁN PHÂN TÍCH HỆ THỐNG</h2>
+            <h1 style="font-size: 4.8rem; margin: 15px 0; color: #b3884d;">Website Bán Nước Hoa</h1>
+            <h3 style="font-size: 1.5rem; color: #636e72;">Hệ Thống Quản Lý & Kinh Doanh Trực Tuyến Hiện Đại</h3>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">1. Lý do chọn đề tài</h2>
+            <h2 class="slide-header">1.1. Giới thiệu đề tài</h2>
             <div class="content grid-2-text-img">
                 <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="margin-bottom: 10px;">Lý do chọn đề tài</h3>
                     <ul>
                         <li>Nhu cầu mua sắm trực tuyến trong thời đại số hóa ngày càng tăng cao.</li>
                         <li>Ngành nước hoa cần mở rộng thị trường và nâng cao hiệu quả quản lý kho hàng.</li>
@@ -167,7 +166,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">2. Mục tiêu hệ thống</h2>
+            <h2 class="slide-header">Mục tiêu của hệ thống</h2>
             <div class="content grid-2">
                 <div class="card">
                     <h3 class="highlight">Bán hàng trực tuyến</h3>
@@ -181,7 +180,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">3. Khảo sát hiện trạng</h2>
+            <h2 class="slide-header">1.2. Khảo sát hiện trạng</h2>
             <div class="content card">
                 <h3 style="margin-bottom: 10px;">Quy trình thủ công cũ</h3>
                 <ul>
@@ -194,7 +193,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">4. Những tồn tại của hệ thống cũ</h2>
+            <h2 class="slide-header">Những tồn tại của hệ thống cũ</h2>
             <div class="content">
                 <table>
                     <tr><th>Hạn chế hiện tại</th><th>Mức độ ảnh hưởng</th></tr>
@@ -208,7 +207,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">5. Yêu cầu nghiệp vụ (Khách hàng)</h2>
+            <h2 class="slide-header">1.3. Phân tích yêu cầu nghiệp vụ (Khách hàng)</h2>
             <div class="content card">
                 <ul>
                     <li><span class="highlight">Đăng ký & Đăng nhập:</span> Tạo hồ sơ người dùng để lưu lịch sử mua.</li>
@@ -220,7 +219,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">6. Yêu cầu nghiệp vụ (Quản trị Admin)</h2>
+            <h2 class="slide-header">1.3. Phân tích yêu cầu nghiệp vụ (Quản trị)</h2>
             <div class="content card">
                 <ul>
                     <li><span class="highlight">Quản lý Sản phẩm:</span> Thêm mới, cập nhật giá, sửa mô tả, xóa SP.</li>
@@ -232,56 +231,53 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">7. Yêu cầu Dữ liệu (Thực thể)</h2>
+            <h2 class="slide-header">1.3.2. Yêu cầu dữ liệu</h2>
             <div class="content grid-2">
                 <div class="card">
-                    <h3 class="highlight">Con người</h3>
-                    <p><strong>Khách hàng:</strong> ID, Họ tên, Email, SĐT, User, Pass.</p>
-                    <p><strong>Quản trị:</strong> ID, Username, Password.</p>
+                    <h3 class="highlight">Thực thể chính (Con người)</h3>
+                    <p><strong>Khách hàng:</strong> Mã KH, Họ tên, Email, SĐT, Địa chỉ, Tài khoản.</p>
+                    <p><strong>Quản trị:</strong> Mã QT, Tên đăng nhập, Mật khẩu.</p>
                 </div>
                 <div class="card">
-                    <h3 class="highlight">Kinh doanh</h3>
-                    <p><strong>Sản phẩm:</strong> ID, Tên, Giá, Hình ảnh, Tồn kho.</p>
-                    <p><strong>Đơn hàng:</strong> ID, Ngày đặt, Tổng tiền, Trạng thái.</p>
+                    <h3 class="highlight">Thực thể chính (Kinh doanh)</h3>
+                    <p><strong>Sản phẩm:</strong> Mã SP, Tên SP, Danh mục, Thương hiệu, Giá, Tồn kho.</p>
+                    <p><strong>Đơn hàng:</strong> Mã ĐH, Ngày đặt, Tổng tiền, Trạng thái, Mã KH.</p>
                 </div>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">8. Yêu cầu Phi chức năng</h2>
+            <h2 class="slide-header">1.5. Yêu cầu phi chức năng</h2>
             <div class="content card">
                 <ul>
                     <li><span class="highlight">Hiệu năng:</span> Phản hồi nhanh, hỗ trợ đa người dùng cùng lúc thao tác.</li>
-                    <li><span class="highlight">Bảo mật:</span> Mã hóa mật khẩu MD5/Hash, phân quyền chặt chẽ các trang Admin.</li>
+                    <li><span class="highlight">Bảo mật:</span> Mã hóa mật khẩu, phân quyền chặt chẽ các trang Admin.</li>
                     <li><span class="highlight">Giao diện (UI/UX):</span> Thân thiện, Responsive hoạt động mượt trên Mobile, PC.</li>
                 </ul>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">9. Lựa chọn Công nghệ</h2>
+            <h2 class="slide-header">1.8. Lựa chọn công nghệ</h2>
             <div class="content grid-2-text-img">
                 <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
                     <ul>
-                        <li><span class="highlight">Backend:</span> PHP (Xử lý logic).</li>
-                        <li><span class="highlight">Database:</span> MySQL.</li>
+                        <li><span class="highlight">Backend:</span> PHP & MySQL (Xử lý nghiệp vụ và lưu trữ dữ liệu).</li>
                         <li><span class="highlight">Frontend:</span> HTML5, CSS3, JavaScript.</li>
-                        <li><span class="highlight">Framework:</span> Bootstrap.</li>
-                        <li><span class="highlight">IDE:</span> VS Code, XAMPP.</li>
+                        <li><span class="highlight">Framework:</span> Bootstrap (Thiết kế Responsive chuyên nghiệp).</li>
+                        <li><span class="highlight">Môi trường:</span> VS Code, XAMPP.</li>
                     </ul>
                 </div>
-                <!-- Giảm padding xuống 20px để ảnh có thêm không gian hiển thị -->
                 <div class="slide-img-container" style="background: #fff; padding: 20px;">
-                    <!-- Đổi height thành 100% và bỏ margin-top -->
-                    <img src="https://i.pinimg.com/736x/08/d2/11/08d211ac6b1195877e41186ad05a7573.jpg" style="object-fit: contain; width: 100%; height: 100%;" alt="Tech Stack">
+                    <img src="https://i.pinimg.com/736x/08/d2/11/08d211ac6b1195877e41186ad05a7573.jpg" style="object-fit: contain !important; width: 100%; height: 100%;" alt="Tech Stack">
                 </div>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">10. Mô hình phát triển: Waterfall</h2>
+            <h2 class="slide-header">1.9. Mô hình Thác nước (Waterfall)</h2>
             <div class="content card">
-                <p>Tiếp cận tuần tự giúp kiểm soát tốt tiến độ và chất lượng đồ án:</p>
+                <p>Quy trình thực hiện tuần tự giúp đảm bảo chất lượng và tiến độ dự án:</p>
                 <ol style="margin-left: 30px; margin-top: 15px;">
                     <li>Khảo sát hiện trạng & Thu thập yêu cầu.</li>
                     <li>Phân tích & Thiết kế hệ thống (System Design).</li>
@@ -293,46 +289,38 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">11. Mục tiêu thiết kế hệ thống</h2>
+            <h2 class="slide-header">2.1. Mục tiêu thiết kế hệ thống</h2>
             <div class="content grid-2">
                 <div class="card">
-                    <h3 class="highlight">Trải nghiệm & Giao diện</h3>
-                    <p>Thiết kế tinh tế, sang trọng làm nổi bật hình ảnh nước hoa cao cấp. Responsive 100%.</p>
+                    <h3 class="highlight">Trải Nghiệm & Giao Diện</h3>
+                    <p>Thiết kế đơn giản & sang trọng, làm nổi bật hình ảnh nước hoa cao cấp. Giao diện đa nền tảng.</p>
                 </div>
                 <div class="card">
-                    <h3 class="highlight">Hiệu năng & Quản trị</h3>
-                    <p>CSDL chuẩn hóa, truy xuất nhanh. Cấu trúc mã nguồn dễ dàng nâng cấp bảo trì.</p>
+                    <h3 class="highlight">Quản Trị Kho Khoa Học & Hiệu Năng</h3>
+                    <p>CSDL chuẩn hóa, truy xuất cực nhanh. Cấu trúc mã nguồn dễ dàng nâng cấp bảo mật.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Trang 13 -->
         <div class="mySlides">
-            <h2 class="slide-header">12. Kiến trúc 3 Lớp (3-Tier)</h2>
-            <!-- Ép tỷ lệ cột: Ảnh rộng (1.4 phần) - Chữ hẹp (0.8 phần) để vừa với ảnh dài -->
+            <h2 class="slide-header">2.2. Thiết kế kiến trúc tổng quan</h2>
             <div class="content grid-2-text-img" style="grid-template-columns: 1.4fr 0.8fr;">
-                
-                <!-- KHUNG ẢNH (Nằm trên trong code = Nằm bên trái trên giao diện) -->
                 <div class="slide-img-container" style="background:#fff; padding: 20px 20px 55px 20px;">
-                    <!-- Thêm !important để ghi đè mọi hiệu ứng cắt ảnh cũ -->
                     <img src="https://i.pinimg.com/736x/4a/fa/d9/4afad91b561d7dfcdc1cfab739204168.jpg" style="width: 100%; height: 100%; object-fit: contain !important; border-radius: 4px;" alt="3-tier architecture">
-                    <div class="img-caption">Mô hình kiến trúc 3 lớp tiêu chuẩn</div>
+                    <div class="img-caption">Mô Hình Kiến Trúc Phân Lớp (3 Lớp)</div>
                 </div>
-
-                <!-- KHUNG CHỮ (Nằm dưới trong code = Nằm bên phải trên giao diện) -->
                 <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
                     <ul>
-                        <li><span class="highlight">Presentation:</span> HTML/CSS/JS tiếp nhận tương tác.</li>
-                        <li><span class="highlight">Business Logic:</span> Luồng PHP xử lý đăng nhập, tính tiền.</li>
-                        <li><span class="highlight">Data Layer:</span> MySQL lưu trữ an toàn CSDL.</li>
+                        <li><span class="highlight">Presentation:</span> HTML/CSS/JS tiếp nhận tương tác khách hàng.</li>
+                        <li><span class="highlight">Business Logic:</span> Luồng PHP xử lý nghiệp vụ, giỏ hàng, xác thực.</li>
+                        <li><span class="highlight">Data Layer:</span> MySQL thực thi truy vấn và lưu trữ an toàn CSDL.</li>
                     </ul>
                 </div>
-
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">13. Cấu trúc CSDL (Sản phẩm & Danh mục)</h2>
+            <h2 class="slide-header">Cấu trúc CSDL: Sản phẩm & Danh mục</h2>
             <div class="content grid-2">
                 <div class="card">
                     <h3 class="highlight">Bảng CATEGORIES</h3>
@@ -346,7 +334,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">14. Cấu trúc CSDL (Mua bán)</h2>
+            <h2 class="slide-header">Cấu trúc CSDL: Đơn hàng & Chi tiết</h2>
             <div class="content grid-2">
                 <div class="card">
                     <h3 class="highlight">Bảng ORDERS</h3>
@@ -360,98 +348,90 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">15. Chức năng: Đăng ký & Đăng nhập</h2>
+            <h2 class="slide-header">2.3.1. Phân hệ chức năng Khách hàng</h2>
+            <div class="content card">
+                <ol style="margin-left: 30px; margin-top: 15px;">
+                    <li><span class="highlight">Tạo tài khoản:</span> Lưu giữ thông tin mua sắm cho lần sau.</li>
+                    <li><span class="highlight">Bảo mật:</span> Mật khẩu mã hóa Hash an toàn.</li>
+                    <li><span class="highlight">Mua sắm:</span> Khách dễ dàng tìm kiếm nước hoa theo nhãn hiệu, phân loại dung tích.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">Thiết kế giao diện mua sắm tiện ích</h2>
             <div class="content grid-2-text-img">
-                <div class="card">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
                     <ul>
-                        <li><span class="highlight">Tạo tài khoản:</span> Lưu giữ thông tin mua sắm.</li>
-                        <li><span class="highlight">Bảo mật:</span> Mật khẩu mã hóa Hash an toàn.</li>
-                        <li><span class="highlight">Đăng nhập:</span> Dùng Session PHP để duy trì phiên làm việc.</li>
+                        <li><span class="highlight">Trang Giỏ hàng:</span> Tính toán tự động tổng giá trị khi thay đổi số lượng sản phẩm.</li>
+                        <li><span class="highlight">Trang Thanh toán:</span> Form thông tin ngắn gọn, cơ chế thanh toán đa dạng (COD và Chuyển khoản).</li>
                     </ul>
                 </div>
-                <div class="slide-img-container">
-                    <img src="https://i.pinimg.com/736x/81/7c/34/817c343d9957e70b4932f405277844b1.jpg" alt="Login form placeholder">
-                    <div class="img-caption">Giao diện xác thực tài khoản</div>
+                <div class="slide-img-container" style="background:#fff; padding: 15px 15px 45px 15px;">
+                    <img src="https://i.pinimg.com/736x/4b/af/b3/4bafb3db104a0be0afdcbb6d9b5659c4.jpg" alt="Cart placeholder" style="object-fit: contain !important; border-radius: 4px;">
+                    <div class="img-caption">Trang Giỏ Hàng Trực Quan</div>
                 </div>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">16. Chức năng: Giỏ hàng & Thanh toán</h2>
+            <h2 class="slide-header">2.3.2. Chức năng Quản trị viên (P1)</h2>
             <div class="content grid-2-text-img">
-                <div class="card">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="margin-bottom: 10px;">Quản lý cơ sở dữ liệu</h3>
                     <ul>
-                        <li><span class="highlight">Giỏ hàng:</span> Tự động gom nhóm sản phẩm, cộng dồn số lượng.</li>
-                        <li><span class="highlight">Xác nhận:</span> Điền form thu thập thông tin nhận hàng.</li>
-                        <li><span class="highlight">Thanh toán:</span> COD và Chuyển khoản ngân hàng.</li>
+                        <li><span class="highlight">Sản phẩm:</span> Thêm mới nước hoa, chỉnh sửa giá bán, tồn kho, hình ảnh trưng bày.</li>
+                        <li><span class="highlight">Danh mục:</span> Thao tác phân loại định hình trực quan bố cục web.</li>
+                        <li><span class="highlight">Khách hàng:</span> Quản lý tài khoản đăng ký hệ thống.</li>
                     </ul>
                 </div>
-                <div class="slide-img-container">
-                    <img src="https://i.pinimg.com/736x/4b/af/b3/4bafb3db104a0be0afdcbb6d9b5659c4.jpg" alt="Cart placeholder">
-                    <div class="img-caption">Quản lý Giỏ hàng trực tuyến</div>
+                <div class="slide-img-container" style="background:#fff; padding: 15px 15px 45px 15px;">
+                    <img src="https://i.pinimg.com/736x/6b/00/fb/6b00fbefe2a96da5da5f00966cc9627c.jpg" alt="Admin Dashboard" style="object-fit: contain !important; border-radius: 4px;">
+                    <div class="img-caption">Quản lý sản phẩm</div>
                 </div>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">17. Quản trị: Quản lý Sản phẩm</h2>
-            <div class="content grid-2-text-img">
-                <div class="card">
-                    <h3 style="margin-bottom: 10px;">Thao tác CRUD</h3>
-                    <ul>
-                        <li><span class="highlight">Create:</span> Nhập tên, giá, hình ảnh.</li>
-                        <li><span class="highlight">Read:</span> Hiển thị dạng bảng trực quan.</li>
-                        <li><span class="highlight">Update:</span> Cập nhật giá bán, tồn kho.</li>
-                        <li><span class="highlight">Delete:</span> Xóa bỏ sản phẩm lỗi thời.</li>
-                    </ul>
-                </div>
-                <div class="slide-img-container">
-                    <img src="https://i.pinimg.com/736x/6b/00/fb/6b00fbefe2a96da5da5f00966cc9627c.jpg" alt="Admin Dashboard">
-                    <div class="img-caption">Giao diện Admin Dashboard</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mySlides">
-            <h2 class="slide-header">18. Quản trị: Đơn hàng & Doanh thu</h2>
+            <h2 class="slide-header">2.3.2. Chức năng Quản trị viên (P2)</h2>
             <div class="content card">
                 <ul>
-                    <li><span class="highlight">Tiếp nhận đơn:</span> Thông tin đơn hàng mới cập nhật tức thì.</li>
-                    <li><span class="highlight">Xử lý trạng thái:</span> Cập nhật: Chờ xử lý &rarr; Đang giao &rarr; Hoàn thành.</li>
-                    <li><span class="highlight">Báo cáo doanh thu:</span> Lọc các đơn "Hoàn thành", dùng SQL <code>SUM()</code> tính tổng thu nhập.</li>
+                    <li><span class="highlight">Quản lý Đơn hàng:</span> Tiếp nhận, hiển thị đầy đủ ngày đặt, tổng tiền.</li>
+                    <li><span class="highlight">Theo dõi trạng thái:</span> Cập nhật: Mới &rarr; Đang xử lý &rarr; Đang giao &rarr; Hoàn thành.</li>
+                    <li><span class="highlight">Báo cáo doanh thu:</span> Hệ thống truy xuất tự động (SQL <code>SUM()</code>) thống kê doanh thu theo thời gian, hỗ trợ ra quyết định.</li>
                 </ul>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">19. Thiết kế Giao diện UI/UX</h2>
+            <h2 class="slide-header">2.4. Thiết kế giao diện Trang chủ</h2>
             <div class="content grid-2-text-img">
-                <div class="card">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
                     <ul>
-                        <li><span class="highlight">Trang chủ:</span> Lưới Grid hiển thị sản phẩm nổi bật, Banner cuốn hút.</li>
-                        <li><span class="highlight">Flash Messages:</span> Thông báo Popup tinh tế thay cho alert() cũ.</li>
-                        <li><span class="highlight">DRY:</span> Tách header/footer thành module dùng chung.</li>
+                        <li><span class="highlight">Header:</span> Logo Perfume Store cùng menu điều hướng thông minh.</li>
+                        <li><span class="highlight">Banner:</span> Trình chiếu chiến dịch khuyến mãi, bộ sưu tập mới.</li>
+                        <li><span class="highlight">Featured Grid:</span> Lưới hiển thị sản phẩm nổi bật kèm nút mua.</li>
                     </ul>
                 </div>
-                <div class="slide-img-container">
-                    <img src="https://i.pinimg.com/736x/4a/57/c4/4a57c48b83774a6f290c296b76c8c65f.jpg" alt="Homepage">
-                    <div class="img-caption">Thiết kế trang chủ sang trọng</div>
+                <div class="slide-img-container" style="background:#fff; padding: 15px 15px 45px 15px;">
+                    <img src="https://i.pinimg.com/736x/4a/57/c4/4a57c48b83774a6f290c296b76c8c65f.jpg" alt="Homepage" style="object-fit: contain !important; border-radius: 4px;">
+                    <div class="img-caption">Thành Phần Giao Diện Trang Chủ</div>
                 </div>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">20. Quy trình đặt hàng tuần tự</h2>
+            <h2 class="slide-header">Quy trình nghiệp vụ đặt hàng tuần tự</h2>
             <div class="content">
-                <div class="card" style="margin-bottom:10px;">1. <span class="highlight">Khách hàng:</span> Tìm kiếm nước hoa và đưa vào giỏ.</div>
-                <div class="card" style="margin-bottom:10px;">2. <span class="highlight">Khách hàng:</span> Điền thông tin giao nhận, chọn cách thanh toán.</div>
-                <div class="card" style="margin-bottom:10px;">3. <span class="highlight">Hệ thống:</span> Gửi đơn về Admin. Admin xác nhận xuất kho.</div>
-                <div class="card">4. <span class="highlight">Giao vận:</span> Khách nhận hàng, hệ thống lưu doanh thu thành công.</div>
+                <div class="card" style="margin-bottom:10px;">1. <span class="highlight">Lựa chọn nước hoa:</span> Khách hàng tìm và thêm vào giỏ.</div>
+                <div class="card" style="margin-bottom:10px;">2. <span class="highlight">Điền thông tin:</span> Nhập địa chỉ giao nhận và phương thức thanh toán.</div>
+                <div class="card" style="margin-bottom:10px;">3. <span class="highlight">Admin phê duyệt:</span> Xác nhận, xuất kho và bàn giao vận chuyển.</div>
+                <div class="card">4. <span class="highlight">Giao hàng & Thống kê:</span> Nhận hàng, lưu trữ ghi nhận doanh số.</div>
             </div>
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">21. Điểm nhấn: Bảo mật Hệ thống</h2>
+            <h2 class="slide-header">Điểm nhấn: Bảo mật Hệ thống</h2>
             <div class="content grid-2">
                 <div class="card">
                     <h3 class="highlight">PDO & Prepared Statements</h3>
@@ -465,7 +445,7 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">22. Điểm nhấn: Toàn vẹn dữ liệu</h2>
+            <h2 class="slide-header">Điểm nhấn: Toàn vẹn dữ liệu</h2>
             <div class="content card">
                 <h3 class="highlight">Kỹ thuật Database Transaction</h3>
                 <p style="margin-top: 10px;">Quy trình đặt hàng cần lưu vào 2 bảng (Orders và Order_Items). Hệ thống sử dụng cặp lệnh <code>beginTransaction()</code> và <code>commit()</code>.</p>
@@ -474,22 +454,251 @@
         </div>
 
         <div class="mySlides">
-            <h2 class="slide-header">23. Hiệu quả hệ thống Mới so với Cũ</h2>
+            <h2 class="slide-header">Hiệu quả vận hành của hệ thống mới</h2>
             <div class="content">
                 <table>
-                    <tr><th>Tiêu chí</th><th>Thủ công (Cũ)</th><th>Website Mới</th></tr>
-                    <tr><td>Xử lý giao dịch</td><td>Chậm, mất thời gian</td><td><span class="highlight">Tức thì, tự động</span></td></tr>
-                    <tr><td>Quản lý tồn kho</td><td>Dễ nhầm lẫn</td><td><span class="highlight">Chính xác tuyệt đối</span></td></tr>
-                    <tr><td>Thống kê doanh thu</td><td>Cộng tay, dễ thất lạc</td><td><span class="highlight">1 click ra báo cáo</span></td></tr>
-                    <tr><td>Tiếp cận khách</td><td>Bị giới hạn địa lý</td><td><span class="highlight">Bán hàng 24/7 toàn quốc</span></td></tr>
+                    <tr><th>Tiêu chí so sánh</th><th>Quy trình thủ công cũ</th><th>Hệ thống Website mới</th></tr>
+                    <tr><td>Tốc độ xử lý giao dịch</td><td>Chậm, mất nhiều thời gian</td><td><span class="highlight">Tức thì, tự động hóa</span></td></tr>
+                    <tr><td>Quản lý lượng tồn kho</td><td>Dễ nhầm lẫn, mất thời gian</td><td><span class="highlight">Trừ tồn kho tự động, chính xác</span></td></tr>
+                    <tr><td>Thống kê doanh thu</td><td>Cộng tay, dễ thất lạc hóa đơn</td><td><span class="highlight">Xuất báo cáo trực quan 1 click</span></td></tr>
+                    <tr><td>Phạm vi tiếp cận</td><td>Giới hạn địa lý, giờ mở cửa</td><td><span class="highlight">Mua sắm trực tuyến 24/7</span></td></tr>
                 </table>
             </div>
         </div>
 
-        <div class="mySlides" style="align-items: center; text-align: center; background: linear-gradient(rgba(10, 17, 40, 0.9), rgba(10, 17, 40, 0.95)), url('https://images.unsplash.com/photo-1615397323602-0e2f5b61e050?auto=format&fit=crop&q=80&w=1200') center/cover;">
-            <h1 style="font-size: 3.5rem; margin-top: 50px;">CÂU HỎI & THẢO LUẬN</h1>
-            <h2 style="font-size: 2rem; color: #fff; margin-top: 20px;">Trân trọng cảm ơn Thầy Cô và các bạn đã lắng nghe!</h2>
-            <p style="margin-top: 50px; font-size: 1.2rem; color: #D4AF37;">🌐 Đồ án môn học Phân tích Hệ Thống - Website Perfume Store</p>
+        <div class="mySlides">
+            <h2 class="slide-header">3.1. Môi trường phát triển hệ thống</h2>
+            <div class="content grid-2">
+                <div class="card">
+                    <h3 class="highlight">Phần cứng & Công nghệ</h3>
+                    <ul>
+                        <li><span class="highlight">CPU:</span> Intel Core i5 / <span class="highlight">RAM:</span> 8GB / <span class="highlight">SSD:</span> 256GB</li>
+                        <li><span class="highlight">Backend:</span> PHP (Sử dụng PDO)</li>
+                        <li><span class="highlight">Frontend:</span> HTML5, CSS3, JavaScript, Bootstrap</li>
+                        <li><span class="highlight">Database:</span> SQL (MySQL)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">Phần mềm sử dụng</h3>
+                    <table>
+                        <tr><th>Phần mềm</th><th>Mục đích</th></tr>
+                        <tr><td>Windows 10/11</td><td>Hệ điều hành</td></tr>
+                        <tr><td>XAMPP</td><td>Máy chủ Web & CSDL</td></tr>
+                        <tr><td>VS Code</td><td>Môi trường soạn thảo mã nguồn</td></tr>
+                        <tr><td>GitHub</td><td>Lưu trữ và quản lý phiên bản</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.2. Xây dựng cơ sở dữ liệu (Phần 1)</h2>
+            <div class="content grid-2">
+                <div class="card">
+                    <h3 class="highlight">Bảng CUSTOMERS (Khách hàng)</h3>
+                    <p>Lưu trữ thông tin định danh và tài khoản đăng nhập của người dùng.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Các trường: <code>id, full_name, email, phone, address, username, password</code></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">Bảng PRODUCTS & CATEGORIES</h3>
+                    <p>Quản lý toàn bộ thông tin sản phẩm nước hoa và phân loại danh mục.</p>
+                    <ul style="margin-top: 10px;">
+                        <li><span class="highlight">Sản phẩm:</span> <code>id, name, price, qty, image_url, description, category_id</code></li>
+                        <li><span class="highlight">Danh mục:</span> <code>id, name</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.2. Xây dựng cơ sở dữ liệu (Phần 2)</h2>
+            <div class="content grid-2">
+                <div class="card">
+                    <h3 class="highlight">Bảng ORDERS (Đơn hàng)</h3>
+                    <p>Lưu vết toàn bộ quá trình giao dịch, thông tin nhận hàng và trạng thái đơn.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Thông tin: <code>order_code, customer_id, receiver_name...</code></li>
+                        <li>Tài chính: <code>subtotal, discount_amount, shipping_fee, total_amount</code></li>
+                        <li>Trạng thái: <code>status, payment_status</code></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">Bảng ORDER_ITEMS (Chi tiết đơn)</h3>
+                    <p>Lưu danh sách từng sản phẩm cụ thể nằm trong một đơn hàng.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Các trường: <code>id, order_id, product_id, quantity, line_total</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.3.1 & 3.3.2. Đăng ký & Đăng nhập</h2>
+            <div class="content grid-2-text-img">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <ul>
+                        <li><span class="highlight">Đăng ký tài khoản:</span> Cho phép khách tạo mới. Dữ liệu được kiểm tra, mật khẩu mã hóa trước khi lưu vào <code>customers</code>.</li>
+                        <li><span class="highlight">Đăng nhập xác thực:</span> Truy vấn CSDL, dùng hàm <code>password_verify()</code> đối chiếu mật khẩu. Nếu khớp, khởi tạo Session.</li>
+                    </ul>
+                </div>
+                <div class="slide-img-container" style="background:#fff; padding: 15px 15px 45px 15px;">
+                    <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&q=80&w=800" alt="Form đăng nhập" style="object-fit: contain !important; border-radius: 4px;">
+                    <div class="img-caption">Giao diện Đăng ký / Đăng nhập</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.3.3 & 3.3.4. Hiển thị SP & Giỏ hàng</h2>
+            <div class="content grid-2-text-img">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <ul>
+                        <li><span class="highlight">Hiển thị sản phẩm:</span> Trình bày hình ảnh, tên và giá bán qua truy vấn <code>SELECT * FROM products</code>.</li>
+                        <li><span class="highlight">Giỏ hàng:</span> Cho phép thêm, xóa, cập nhật số lượng. Dùng <strong>Key giỏ hàng</strong> kết hợp (Mã SP + Màu + Dung tích).</li>
+                    </ul>
+                </div>
+                <div class="slide-img-container" style="background:#fff; padding: 15px 15px 45px 15px;">
+                    <img src="https://i.pinimg.com/736x/d6/61/6f/d6616febf0db141f8ca8d0a59f2ff201.jpg" alt="Giỏ hàng" style="object-fit: contain !important; border-radius: 4px;">
+                    <div class="img-caption">Giao diện Giỏ hàng trực tuyến</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.3.5. Chức năng đặt hàng</h2>
+            <div class="content card">
+                <h3 style="margin-bottom: 10px;">Quy trình xử lý lưu đơn hàng (Database Transaction)</h3>
+                <ul>
+                    <li><span class="highlight">Bước 1:</span> Xác nhận giỏ hàng & Nhập thông tin nhận hàng.</li>
+                    <li><span class="highlight">Bước 2:</span> Khởi tạo Transaction bằng <code>$pdo->beginTransaction()</code>.</li>
+                    <li><span class="highlight">Bước 3:</span> Thực thi <code>INSERT</code> thông tin chung vào bảng <code>orders</code>.</li>
+                    <li><span class="highlight">Bước 4:</span> Lấy ID vừa tạo, chạy vòng lặp <code>INSERT</code> các sản phẩm vào <code>order_items</code>.</li>
+                    <li><span class="highlight">Bước 5:</span> Hoàn tất bằng lệnh <code>$pdo->commit()</code> và xóa Giỏ hàng khỏi Session.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.3.6. Chức năng quản lý sản phẩm</h2>
+            <div class="content grid-2-text-img">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <p>Quản trị viên duy trì danh mục hàng hóa qua các thao tác (CRUD):</p>
+                    <ul style="margin-top: 10px;">
+                        <li><span class="highlight">Create (Thêm):</span> Xử lý upload ảnh, lưu vào <code>products</code>.</li>
+                        <li><span class="highlight">Update (Sửa):</span> Tải lại dữ liệu cũ, chỉnh sửa giá bán / tồn kho.</li>
+                        <li><span class="highlight">Delete (Xóa):</span> Cảnh báo Confirm trước khi chạy lệnh <code>DELETE</code>.</li>
+                    </ul>
+                </div>
+                <div class="slide-img-container" style="background:#fff; padding: 15px 15px 45px 15px;">
+                    <img src="https://i.pinimg.com/736x/bd/f7/73/bdf77346fa88c91432f552c1b5d61227.jpg" alt="Admin" style="object-fit: contain !important; border-radius: 4px;">
+                    <div class="img-caption">Trang quản trị thêm sửa xóa sản phẩm</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.3.7 & 3.3.8. Quản lý đơn & Thống kê</h2>
+            <div class="content grid-2">
+                <div class="card">
+                    <h3 class="highlight">3.3.7 Quản lý đơn hàng</h3>
+                    <p>Giúp quản trị viên theo dõi thông tin đơn hàng.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Cập nhật trạng thái giao hàng (Chờ xử lý, Đang giao, Đã giao).</li>
+                        <li>Cập nhật trạng thái thanh toán.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">3.3.8 Thống kê doanh thu</h3>
+                    <p>Hỗ trợ tổng hợp tài chính cuối tháng tự động.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Lọc các đơn hàng có <code>status = 'completed'</code>.</li>
+                        <li>Dùng hàm <code>SUM()</code> trong SQL cộng dồn doanh thu chính xác.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.4. Cấu trúc thư mục chương trình</h2>
+            <div class="content grid-2">
+                <div class="card" style="font-family: monospace; font-size: 1.05rem; line-height: 1.8;">
+                    <span class="highlight">NUOCHOATMHSQL/</span><br>
+                    ├── assets/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa;">// File tĩnh (app.js, style.css)</span><br>
+                    ├── includes/ &nbsp;&nbsp;&nbsp;<span style="color:#aaa;">// Chứa db.php, header, footer</span><br>
+                    ├── uploads/ &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa;">// Chứa ảnh avatar tải lên</span><br>
+                    └── config.php &nbsp;&nbsp;<span style="color:#aaa;">// Biến cấu hình hệ thống</span>
+                </div>
+                <div class="card" style="font-family: monospace; font-size: 1.05rem; line-height: 1.8;">
+                    <span class="highlight">Các tệp chức năng chính:</span><br>
+                    ├── admin_*.php &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa;">// Các trang Quản trị</span><br>
+                    ├── index, cart.php <span style="color:#aaa;">// Trang Khách hàng</span><br>
+                    ├── login, profile.php <br>
+                    └── place_order.php &nbsp;<span style="color:#aaa;">// Xử lý luồng đặt hàng</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.5. Các biện pháp bảo mật hệ thống</h2>
+            <div class="content grid-2">
+                <div class="card">
+                    <h3 class="highlight">3.5.1 Chống SQL Injection bằng PDO</h3>
+                    <p style="margin-top: 5px;">Mọi dữ liệu đầu vào đều được tách rời khỏi câu lệnh SQL qua tham số giả (Prepared Statements).</p>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">3.5.2 Mã hóa mật khẩu người dùng</h3>
+                    <p style="margin-top: 5px;">Băm một chiều mật khẩu. Dùng <code>password_verify()</code> đối chiếu chuỗi hash để bảo vệ tài khoản.</p>
+                </div>
+                <div class="card" style="grid-column: span 2;">
+                    <h3 class="highlight">3.5.3 Xác thực và Phân quyền truy cập</h3>
+                    <p style="margin-top: 5px;">Hệ thống tạo Middleware <code>require_login()</code> và <code>require_admin()</code> đặt đầu mỗi trang để chặn đứng mọi truy cập trái phép.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.6. Kỹ thuật đảm bảo toàn vẹn dữ liệu</h2>
+            <div class="content grid-2-text-img" style="grid-template-columns: 1fr 1fr;">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3 class="highlight">3.6.1 Database Transaction</h3>
+                    <p style="margin-top: 5px;">Gói gọn nhiều lệnh SQL vào 1 giao dịch. Nếu mất mạng, lệnh <code>rollBack()</code> hủy bỏ toàn bộ, tránh đơn hàng rác.</p>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3 class="highlight">3.6.2 Ép kiểu dữ liệu nghiêm ngặt</h3>
+                    <p style="margin-top: 5px;">Dữ liệu gửi qua POST/GET được ép kiểu (Dùng <code>(int)</code>, <code>(float)</code>) để ngăn chặn các lỗi toán học nguy hiểm.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <h2 class="slide-header">3.7. Business Logic & 3.8. UX/UI</h2>
+            <div class="content grid-2">
+                <div class="card">
+                    <h3 class="highlight">3.7 Xử lý nghiệp vụ tính toán</h3>
+                    <p style="margin-top: 5px;">Tích hợp quy tắc tự động hóa:</p>
+                    <ul style="margin-top: 5px;">
+                        <li>Giảm 5% giá trị nếu mua từ 3 SP.</li>
+                        <li>Freeship cho đơn >= 500.000đ.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">3.8 Tối ưu hóa trải nghiệm (UX/UI)</h3>
+                    <p style="margin-top: 5px;">Cải tiến tương tác thân thiện:</p>
+                    <ul style="margin-top: 5px;">
+                        <li><strong>Flash Messages:</strong> Báo Popup tinh tế.</li>
+                        <li><strong>Template Partials:</strong> Chuẩn hóa mã (DRY).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mySlides" style="align-items: center; text-align: center; background: linear-gradient(rgba(244, 246, 249, 0.85), rgba(255, 255, 255, 0.95)), url('https://images.unsplash.com/photo-1615397323602-0e2f5b61e050?auto=format&fit=crop&q=80&w=1200') center/cover;">
+            <h1 style="font-size: 3.5rem; margin-top: 50px; color: #b3884d;">CÂU HỎI & THẢO LUẬN</h1>
+            <h2 style="font-size: 2.2rem; color: #2d3436; margin-top: 20px;">Cảm ơn Thầy Cô và các bạn đã chú ý lắng nghe!</h2>
+            <p style="margin-top: 50px; font-size: 1.2rem; color: #636e72;">buiiducthangg@gmail.com | www.buiiducthangg.me</p>
         </div>
 
         <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
